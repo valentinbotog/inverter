@@ -2,7 +2,7 @@
 
 ## Easy way to connect Rails templates content to CMS
 
-Mark CMS-editable content using special formatted comments right in Rails templates. It automatically populated to models and is accessible via CMS of choice. When template is rendered editable content is pulled from databased automatically.
+Mark right in Rails temlpates content that you want to change via CMS. It's automatically populated to models and is accessible via CMS. While Rails rendering template it's pulling editable content from databased automatically.
 
 ## Installation
 
@@ -56,17 +56,24 @@ An example of editable template with three content blocks, e.g. ```pages/about.h
 
   <!--[ subtitle ]-->
   <p>
-    This is an example of the content block named subtitle. This content is editable via CMS, please go to website <%= link_to 'admin', admin_path %> and check how it can be changed.</p>
+    This is an example of the content block named subtitle. This content is editable
+    via CMS, please go to website <%= link_to 'admin', admin_path %> and check how
+    it can be changed.</p>
   <!--END-->
 
   <!--[ body ]-->
   <p>
-    Blocks could have not only plain HTML but a Ruby template code as well. For example these links below are going to be rendered and saved as HTML links in the models. You can access <%= link_to 'welcome', page_path('welcome') %> &amp; <%= link_to 'about', page_path('about') %> pages.
+    Blocks could have not only plain HTML but a Ruby template code as well. For
+    example these links below are going to be rendered and saved as HTML links in
+    the models. You can access <%= link_to 'welcome', page_path('welcome') %> &amp;
+    <%= link_to 'about', page_path('about') %> pages.</p>
   <!--END-->
 
   <!--[ footer ]-->
   <p>
-    This is an example of the content block named footer. This content is editable via CMS, please go to website <%= link_to 'admin', admin_path %> and check how it can be changed.</p>
+    This is an example of the content block named footer. This content is editable
+    via CMS, please go to website <%= link_to 'admin', admin_path %> and check how
+    it can be changed.</p>
   <!--END-->
   ```
 
