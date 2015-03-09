@@ -43,12 +43,15 @@ class @InputInverter
     @config.onInitialize?(this)
 
   hash: (hash={}) ->
-    hash[@config.klassName] = '' #@$input.val()
+    obj = {}
+    for key, input of @inputs
+      input.hash(obj)
+    hash[@config.klassName] = obj
     return hash
 
   updateValue: (@value) ->
-    ''
-    #@$input.val(@value)
+    for key, input of @inputs
+      input.updateValue(@value[key])
 
   showErrorMessage: (message) ->
     @$el.addClass 'error'

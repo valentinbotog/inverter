@@ -77,6 +77,31 @@ An example of editable template with three content blocks, e.g. ```pages/about.h
   <!--END-->
   ```
 
+### Character Setup
+
+Inverter supports [chr](https://github.com/slate-studio/chr) out of the box. Include custom input in the cms configuration file ```admin.coffee```, and setup module configuration:
+
+  ```coffeescript
+
+  #= require inverter
+
+  pagesConfig = ->
+    itemTitleField: 'template_name'
+    disableNewItems: true
+    disableDelete:   true
+    arrayStore: new RailsArrayStore({
+      resource: 'page'
+      path:     '/admin/pages'
+    })
+    formSchema:
+      blocks: { type: 'inverter' }
+  ```
+
+Inverter input has an option ```defaultInputType``` which specifies what input type should be used as default, if nothing specified ```text``` is used. This might be set to WYSIWYG editor of your choice, e.g:
+
+  ```coffeescript
+  blocks: { type: 'inverter', defaultInputType: 'redactor' }
+  ```
 
 ## Inverter family
 

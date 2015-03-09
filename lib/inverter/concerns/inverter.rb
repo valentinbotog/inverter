@@ -18,8 +18,7 @@ module Mongoid
       end
 
       def update_blocks_from_template!
-        template_path   = Rails.root.to_s + '/app/views/' + template_name
-        template_blocks = ::Inverter::Parser.new(template_path).parse
+        template_blocks = ::Inverter::Parser.new(template_name).parse
 
         # add new blocks
         keys_to_add = template_blocks.keys - blocks.keys
