@@ -6,22 +6,30 @@ Mark CMS-editable content using special formatted comments right in Rails templa
 
 ## Installation
 
-Add to ```Gemfile```
+Add to ```Gemfile```:
 
-  gem "inverter", github: "slate-studio/inverter"
+    gem "inverter", github: "slate-studio/inverter"
 
-Setup model configuration ```models/page.rb```:
+Setup initializer ```config/initializers/inverter.rb```:
+
+  ```ruby
+  Inverter.configure do |config|
+    config.model_class = Page # model that stores template editable blocks
+    config.template_folders = %w( pages ) # folders which templates are editable
+  end
+  ```
+
+Configure model that stores template content, e.g. ```models/page.rb```:
 
   ```ruby
   class Page
     include Mongoid::Document
     include Mongoid::Timestamps
-    include Mongoid::SerializableId
     include Mongoid::Inverter
   end
   ```
 
-Setup admin page controller configuration ```controllers/admin/pages_controller.rb```:
+Setup admin page controller configuration ```controllers/admin/pages_controller.rb```, this keeps models in sync with template files changes:
 
   ```ruby
   class Admin::PagesController < Admin::BaseController
@@ -39,14 +47,29 @@ Setup admin page controller configuration ```controllers/admin/pages_controller.
   end
   ```
 
-Setup initializer ```config/initializers/inverter.rb```:
+Controller filter above tracks changes in editable templates on every ```index``` request. This helps to keep models up to date while app development. If new template added to folders it's linked automatically and removed if existing one deleted. Editable piece of content in the template is called name, each block should be named.
 
-  ```ruby
-  Inverter.configure do |config|
-    config.model_class = Page
-    config.template_folders = %w( pages )
-  end
+An example of editable template with three content blocks, e.g. ```pages/about.html.erb```:
+
+  ```html
+  <h1>About</h1>
+
+  <!--[ subtitle ]-->
+  <p>
+    This is an example of the content block named subtitle. This content is editable via CMS, please go to website <%= link_to 'admin', admin_path %> and check how it can be changed.</p>
+  <!--END-->
+
+  <!--[ body ]-->
+  <p>
+    Blocks could have not only plain HTML but a Ruby template code as well. For example these links below are going to be rendered and saved as HTML links in the models. You can access <%= link_to 'welcome', page_path('welcome') %> &amp; <%= link_to 'about', page_path('about') %> pages.
+  <!--END-->
+
+  <!--[ footer ]-->
+  <p>
+    This is an example of the content block named footer. This content is editable via CMS, please go to website <%= link_to 'admin', admin_path %> and check how it can be changed.</p>
+  <!--END-->
   ```
+
 
 ## Inverter family
 
