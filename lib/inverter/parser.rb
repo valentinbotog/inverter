@@ -51,7 +51,7 @@ module Inverter
         html = "Template block wasn't rendered cause of a template syntax error."
       end
 
-      return key, value
+      return key, html
     end
 
     # class methods
