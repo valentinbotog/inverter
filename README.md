@@ -14,8 +14,12 @@ Setup initializer ```config/initializers/inverter.rb```:
 
   ```ruby
   Inverter.configure do |config|
-    config.model_class = Page # model that stores template editable blocks
-    config.template_folders = %w( pages ) # folders which templates are editable
+    # model that stores template editable blocks
+    config.model_class = Page
+    # folders which templates are editable
+    config.template_folders = %w( pages )
+    # templates from template_folders the are not editable
+    config.excluded_template_names = %w( pages/home )
   end
   ```
 
