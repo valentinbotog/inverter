@@ -16,7 +16,7 @@ module Inverter
     # names and content to be editable
     def parse
       result  = {}
-      content = render template: @template_name, layout: false
+      content = File.open(Rails.root.join("app/views", @template_name), "rb").read
 
       s = content.index(START_DELIMITER)
       e = content.index(END_DELIMITER)
@@ -44,6 +44,12 @@ module Inverter
 
       n += NAME_DELIMITER.size
       value = block[n..-1]
+
+      begin
+        html = render inline: value, layout: false
+      rescue
+        html = "Template block wasn't rendered cause of a template syntax error."
+      end
 
       return key, value
     end

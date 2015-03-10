@@ -59,18 +59,7 @@ module Mongoid
       end
 
       def self.sync_objects_with_templates!
-        template_file_names = []
-
-        ::Inverter.template_folders.each do |folder_name|
-          path = Rails.root.join('app/views', "#{ folder_name }/**/*.html.erb")
-          file_names = Dir[path]
-          template_file_names.concat(file_names)
-        end
-
-        template_names = template_file_names.map do |file_name|
-          file_name.gsub(Rails.root.to_s + '/app/views/', '')
-        end
-
+        template_names          = get_template_names
         created_objects         = self.all
         existing_template_names = created_objects.map { |o| o.template_name }
 
@@ -92,6 +81,29 @@ module Mongoid
             o.update_blocks_from_template!
           end
         end
+      end
+
+      def self.get_template_names
+        template_file_names = []
+
+        ::Inverter.template_folders.each do |folder_name|
+          path = Rails.root.join('app/views', "#{ folder_name }/**/*.html.erb")
+          file_names = Dir[path]
+          template_file_names.concat(file_names)
+        end
+
+        template_names = template_file_names.map do |file_name|
+          file_name.gsub(Rails.root.to_s + '/app/views/', '')
+        end
+
+        # skip rails partials
+        template_names.reject! { |n| n.split('/').last.start_with? '_' }
+
+        # exclude names from excluded_templates configuration list
+        excluded_template_names = ::Inverter.excluded_templates.map { |name| "#{ name }.html.erb" }
+        template_names = template_names - excluded_template_names
+
+        return template_names
       end
     end
   end
