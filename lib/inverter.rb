@@ -1,39 +1,18 @@
-require 'inverter/concerns/inverter'
-require 'inverter/configuration'
-require 'inverter/parser'
+require "inverter/concerns/inverter"
+require "inverter/object"
+require "inverter/controller_helper"
+require "inverter/configuration"
+require "inverter/parser"
+require "inverter/version"
+require "inverter/engine"
+require "inverter/template"
 
 module Inverter
   extend Configuration
-
-  require 'inverter/version'
-  require 'inverter/engine'
+  extend Object
 end
 
-module ActionView
-  class Template
-    alias_method :initialize_original, :initialize
+require "meta_tags"
 
-    def initialize(source, identifier, handler, details)
-      inverter_object = _inverter_object(identifier)
-      if inverter_object
-        source = inverter_object.update_template_source(source)
-      end
-
-      initialize_original(source, identifier, handler, details)
-    end
-
-    private
-
-      def _inverter_object(identifier)
-        template_name = identifier.gsub(Rails.root.to_s + '/app/views/', '')
-
-        if template_name.start_with?(*Inverter.template_folders)
-          return Inverter.model_class.where(template_name: template_name).first
-        end
-
-        return nil
-      end
-  end
-end
-
-
+ActionController::Base.send :include, Inverter::ControllerHelper
+ActionView::Template.send   :include, Inverter::Template

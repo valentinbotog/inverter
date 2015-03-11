@@ -4,64 +4,86 @@ module Mongoid
 
     included do
       # attributes
-      field :template_name
-      field :blocks, type: Hash, default: {}
+      field :_page_title,        default: ''
+      field :_page_description,  default: ''
+      field :_page_image_url,    default: ''
+
+      field :_template_name
+      field :_blocks, type: Hash, default: {}
 
       # indexes
-      index({ template_name: 1 })
+      index({ _template_name: 1 })
 
       # helpers
-      def template_changed?
-        template_path = Rails.root.to_s + '/app/views/' + template_name
-        template_time_updated = File.mtime(template_path)
-        template_time_updated > updated_at
-      end
+      def update_inverter_meta_tags
+        ::Inverter.meta_tags[:og] ||= {}
 
-      def update_blocks_from_template!
-        template_blocks = ::Inverter::Parser.new(template_name).parse
-
-        # add new blocks
-        keys_to_add = template_blocks.keys - blocks.keys
-        keys_to_add.each do |key|
-          blocks[key] = template_blocks[key]
+        unless self._page_title.empty?
+          ::Inverter.meta_tags[:title]      = self._page_title
+          ::Inverter.meta_tags[:og][:title] = self._page_title
         end
 
-        # remove old blocks
-        keys_to_remove = blocks.keys - template_blocks.keys
-        keys_to_remove.each do |key|
-          blocks.delete(key)
+        unless self._page_description.empty?
+          ::Inverter.meta_tags[:description]      = self._page_description
+          ::Inverter.meta_tags[:og][:description] = self._page_description
         end
 
-        save
+        unless self._page_image_url.empty?
+          ::Inverter.meta_tags[:og][:image] = self._page_image_url
+        end
       end
 
-      def update_template_source(source)
-        map = ::Inverter::Parser.map_blocks_for(source)
+      def update_html(html)
+        map = ::Inverter::Parser.map_blocks_for(html)
 
         offset = 0
 
         map.each do |name, pos|
-          block = "\n" + blocks[name] + "\n"
-          source[offset+pos[0]..offset+pos[1]] = block
+          block = "\n" + self._blocks[name] + "\n"
+          html[offset+pos[0]..offset+pos[1]] = block
 
           block_size          = block.size
           template_block_size = pos[1] - pos[0]
           offset             += block_size - template_block_size - 1
         end
 
-        return source
+        return html
+      end
+
+      def template_changed?
+        template_path = Rails.root.to_s + '/app/views/' + self._template_name
+        template_time_updated = File.mtime(template_path)
+        template_time_updated > updated_at
+      end
+
+      def update_blocks_from_template!
+        template_blocks = ::Inverter::Parser.new(self._template_name).parse
+
+        # add new blocks
+        keys_to_add = template_blocks.keys - self._blocks.keys
+        keys_to_add.each do |key|
+          self._blocks[key] = template_blocks[key]
+        end
+
+        # remove old blocks
+        keys_to_remove = self._blocks.keys - template_blocks.keys
+        keys_to_remove.each do |key|
+          self._blocks.delete(key)
+        end
+
+        save
       end
 
       # class methods
       def self.create_from_template(template_name)
         template_blocks = ::Inverter::Parser.new(template_name).parse
-        create(template_name: template_name, blocks: template_blocks)
+        create(_template_name: template_name, _blocks: template_blocks)
       end
 
-      def self.sync_objects_with_templates!
+      def self.sync_with_templates!
         template_names          = get_template_names
         created_objects         = self.all
-        existing_template_names = created_objects.map { |o| o.template_name }
+        existing_template_names = created_objects.map { |o| o._template_name }
 
         # add new objects
         if existing_template_names.size < template_names.size
@@ -72,7 +94,7 @@ module Mongoid
         # delete object for removed templates
         if existing_template_names.size > template_names.size
           template_names_to_remove = existing_template_names - template_names
-          template_names_to_remove.each { |name| find_by(template_name: name).delete }
+          template_names_to_remove.each { |name| find_by(_template_name: name).delete }
         end
 
         # update objects for changes in templates

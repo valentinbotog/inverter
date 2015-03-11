@@ -90,7 +90,7 @@ Inverter supports [chr](https://github.com/slate-studio/chr) out of the box. Inc
   #= require inverter
 
   pagesConfig = ->
-    itemTitleField: 'template_name'
+    itemTitleField: '_template_name'
     disableNewItems: true
     disableDelete:   true
     arrayStore: new RailsArrayStore({
@@ -98,6 +98,9 @@ Inverter supports [chr](https://github.com/slate-studio/chr) out of the box. Inc
       path:     '/admin/pages'
     })
     formSchema:
+      _page_title:       { type: 'string', label: 'Title'       }
+      _page_description: { type: 'text',   label: 'Description' }
+      _page_image_url:   { type: 'string', label: 'Image URL'   }
       blocks: { type: 'inverter' }
   ```
 
@@ -106,6 +109,23 @@ Inverter input has an option ```defaultInputType``` which specifies what input t
   ```coffeescript
   blocks: { type: 'inverter', defaultInputType: 'redactor' }
   ```
+
+### Meta Tags Support
+
+```Mongoid::Inverter``` concern includes page meta tags fields. Check out [meta-tags](https://github.com/kpumuk/meta-tags) gem documentation for usage details, it helps to make pages SEO friendly.
+
+To enable meta-tags support include following helper in application layout:
+
+  ```erb
+  <%= display_meta_tags title:       'Default Website Title',
+                        description: 'Default Website Description',
+                        open_graph: { type:        'website',
+                                      title:       'Default Website Title',
+                                      description: 'Default Website Description',
+                                      image:       'https://slate-git-images.s3-us-west-1.amazonaws.com/slate.png' } %>
+  ```
+
+To override default behavior add custom fields and write own ```update_inverter_meta_tags``` implementation.
 
 ## Inverter family
 

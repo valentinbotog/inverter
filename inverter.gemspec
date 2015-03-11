@@ -23,7 +23,8 @@ pulled from databased automatically.
   s.files         = `git ls-files`.split("\n")
   s.require_paths = ['lib']
 
-  s.add_dependency('render_anywhere', '>= 0.0.10')
+  s.add_dependency("render_anywhere", ">= 0.0.10")
+  s.add_dependency("meta-tags",       ">= 2.0")
 end
 
 
