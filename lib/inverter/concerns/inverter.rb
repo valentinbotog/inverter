@@ -4,17 +4,26 @@ module Mongoid
 
     included do
       # attributes
-      field :_page_title,        default: ''
-      field :_page_description,  default: ''
-      field :_page_image_url,    default: ''
+      field :_page_title,         default: ''
+      field :_page_description,   default: ''
+      field :_page_image_url,     default: ''
 
       field :_template_name
+      field :_name,               default: ''
       field :_blocks, type: Hash, default: {}
 
       # indexes
       index({ _template_name: 1 })
 
-      # helpers
+
+      # returns title to be used in cms and identify page in list
+      def list_item_title
+        self._name.empty? ? self._template_name : self._name
+      end
+
+
+      # populates seo values to cached meta_tags object which is
+      # used by ActionController while template rendering
       def update_inverter_meta_tags
         ::Inverter.meta_tags[:og] ||= {}
 
@@ -33,6 +42,9 @@ module Mongoid
         end
       end
 
+
+      # updates blocks in provided html with values from the
+      # objects _blocks hash
       def update_html(html)
         map = ::Inverter::Parser.map_blocks_for(html)
 
@@ -50,14 +62,20 @@ module Mongoid
         return html
       end
 
+
+      # check if template file was changed after object was saved
       def template_changed?
         template_path = Rails.root.to_s + '/app/views/' + self._template_name
         template_time_updated = File.mtime(template_path)
         template_time_updated > updated_at
       end
 
-      def update_blocks_from_template!
-        template_blocks = ::Inverter::Parser.new(self._template_name).parse
+
+      # read template blocks and save to objects _blocks hash
+      def update_from_template!
+        template_parser = ::Inverter::Parser.new(self._template_name)
+        template_blocks = template_parser.blocks
+        name            = template_parser.name
 
         # add new blocks
         keys_to_add = template_blocks.keys - self._blocks.keys
@@ -71,15 +89,26 @@ module Mongoid
           self._blocks.delete(key)
         end
 
+        # update page name
+        self._name = name
+
         save
       end
 
+
       # class methods
+
+
+      # creat new page object from template
       def self.create_from_template(template_name)
-        template_blocks = ::Inverter::Parser.new(template_name).parse
-        create(_template_name: template_name, _blocks: template_blocks)
+        template_parser = ::Inverter::Parser.new(template_name)
+        template_blocks = template_parser.blocks
+        name            = template_parser.name
+        create(_name: name, _template_name: template_name, _blocks: template_blocks)
       end
 
+
+      # syncronize templates with existing page objects
       def self.sync_with_templates!
         template_names          = get_template_names
         created_objects         = self.all
@@ -100,11 +129,14 @@ module Mongoid
         # update objects for changes in templates
         created_objects.each do |o|
           if o.template_changed?
-            o.update_blocks_from_template!
+            o.update_from_template!
           end
         end
       end
 
+
+      # returns list of template names for gem configuration in
+      # config/initializers/inverter.rb
       def self.get_template_names
         template_file_names = []
 

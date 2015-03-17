@@ -1,1 +1,1 @@
-#= require ./chr/form/_inputInverter
+#= require ./chr/form/input-inverter

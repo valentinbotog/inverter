@@ -16,8 +16,10 @@ Setup initializer ```config/initializers/inverter.rb```:
   Inverter.configure do |config|
     # model that stores template editable blocks
     config.model_class = Page
+
     # folders which templates are editable
     config.template_folders = %w( pages )
+
     # templates from template_folders the are not editable
     config.excluded_template_names = %w( pages/home )
   end
@@ -38,6 +40,7 @@ Setup admin page controller configuration ```controllers/admin/pages_controller.
   ```ruby
   class Admin::PagesController < Admin::BaseController
     mongosteen
+    json_config({ methods: [ :list_item_title ])
 
     before_filter :syncronize_templates, only: [ :index ]
 
@@ -53,9 +56,10 @@ Setup admin page controller configuration ```controllers/admin/pages_controller.
 
 Controller filter above tracks changes in editable templates on every ```index``` request. This helps to keep models up to date while app development. If new template added to folders it's linked automatically and removed if existing one deleted. Editable piece of content in the template is called name, each block should be named.
 
-An example of editable template with three content blocks, e.g. ```pages/about.html.erb```:
+An example of editable template with three content blocks and page name (to identify page in CMS), e.g. ```pages/about.html.erb```:
 
   ```html
+  <!--// About //-->
   <h1>About</h1>
 
   <!--[ subtitle ]-->
@@ -90,10 +94,10 @@ Inverter supports [chr](https://github.com/slate-studio/chr) out of the box. Inc
   #= require inverter
 
   pagesConfig = ->
-    itemTitleField: '_template_name'
+    itemTitleField: 'list_item_title'
     disableNewItems: true
     disableDelete:   true
-    arrayStore: new RailsArrayStore({
+    arrayStore: new MongosteenArrayStore({
       resource: 'page'
       path:     '/admin/pages'
     })
