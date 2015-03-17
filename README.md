@@ -114,6 +114,8 @@ Inverter input has an option ```defaultInputType``` which specifies what input t
   blocks: { type: 'inverter', defaultInputType: 'redactor' }
   ```
 
+You can also specify input type that you want to use for specific block like this: ```<!--[ Main Body : text ]-->``` — in this case ```Main Body``` would be a label and ```text``` is an input type that will be used to edit this block in CMS.
+
 ### Meta Tags Support
 
 ```Mongoid::Inverter``` concern includes page meta tags fields. Check out [meta-tags](https://github.com/kpumuk/meta-tags) gem documentation for usage details, it helps to make pages SEO friendly.

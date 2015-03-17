@@ -1,3 +1,12 @@
+# _slugify(string)
+if ! @_slugify
+  @_slugify = (string) ->
+    return string.toString().toLowerCase()
+      .replace(/\s+/g, '-')           # Replace spaces with -
+      .replace(/[^\w\-]+/g, '')       # Remove all non-word chars
+      .replace(/\-\-+/g, '-')         # Replace multiple - with single -
+      .trim()                         # Trim - from start/end of text
+
 # -----------------------------------------------------------------------------
 # INPUT HASH
 # -----------------------------------------------------------------------------
@@ -17,10 +26,23 @@ class @InputInverter
   _addInput: (name, value) ->
     inputConfig = $.extend {}, @config
 
-    inputType             = @config.defaultInputType || 'text'
-    inputConfig.label     = name.titleize()
+    # get input label and type from name, e.g. "Page Title : text"
+    labelAndType = name.split(' : ')
+
+    # input label
+    inputConfig.label = labelAndType[0].titleize()
+
+    # input type
+    inputType  = labelAndType[1]
+    inputType ?= @config.defaultInputType || 'text'
+    inputType  = $.trim(inputType)
+
+    if ! _chrFormInputs[inputType]
+      inputType = 'text'
+
+    # input css class
+    inputConfig.klassName = 'inverter-block-' + _slugify(inputConfig.label)
     inputConfig.klass    ?= 'stacked'
-    inputConfig.klassName = name
 
     inputClass = _chrFormInputs[inputType]
 
