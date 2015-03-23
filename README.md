@@ -104,6 +104,7 @@ Inverter supports [chr](https://github.com/slate-studio/chr) out of the box. Inc
     formSchema:
       _page_title:       { type: 'string', label: 'Title'       }
       _page_description: { type: 'text',   label: 'Description' }
+      _page_keywords:    { type: 'text',   label: 'Keywords' }
       _page_image_url:   { type: 'string', label: 'Image URL'   }
       blocks: { type: 'inverter' }
   ```
