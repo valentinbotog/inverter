@@ -48,7 +48,7 @@ Setup admin page controller configuration ```controllers/admin/pages_controller.
 
       def syncronize_templates
         if Rails.env.development?
-          resource_class.sync_objects_with_templates!
+          resource_class.sync_with_templates!
         end
       end
   end

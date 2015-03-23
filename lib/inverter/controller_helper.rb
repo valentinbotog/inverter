@@ -9,6 +9,7 @@ module Inverter
     def render_with_inverter_object(*args, &block)
       # reset Inveter.object to nil
       Inverter.reset_object()
+
       # make a pointer to meta_tags for future use
       Inverter.set_meta_tags(meta_tags)
 

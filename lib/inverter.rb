@@ -5,7 +5,7 @@ require "inverter/configuration"
 require "inverter/parser"
 require "inverter/version"
 require "inverter/engine"
-require "inverter/template"
+require "inverter/template_renderer_helper"
 
 module Inverter
   extend Configuration
@@ -15,4 +15,4 @@ end
 require "meta_tags"
 
 ActionController::Base.send :include, Inverter::ControllerHelper
-ActionView::Template.send   :include, Inverter::Template
+ActionView::TemplateRenderer.send :include, Inverter::TemplateRendererHelper
