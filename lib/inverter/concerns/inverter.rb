@@ -6,6 +6,7 @@ module Mongoid
       # attributes
       field :_page_title,         default: ''
       field :_page_description,   default: ''
+      field :_page_keywords,      default: ''
       field :_page_image_url,     default: ''
 
       field :_template_name
@@ -35,6 +36,10 @@ module Mongoid
         unless self._page_description.empty?
           ::Inverter.meta_tags[:description]      = self._page_description
           ::Inverter.meta_tags[:og][:description] = self._page_description
+        end
+
+        unless self._page_keywords.empty?
+          ::Inverter.meta_tags[:keywords] = self._page_keywords
         end
 
         unless self._page_image_url.empty?
