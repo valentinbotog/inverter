@@ -16,6 +16,9 @@ module Mongoid
       # indexes
       index({ _template_name: 1 })
 
+      # scopes
+      default_scope -> { asc(:created_at) }
+
 
       # returns title to be used in cms and identify page in list
       def list_item_title
@@ -93,6 +96,11 @@ module Mongoid
         keys_to_remove.each do |key|
           self._blocks.delete(key)
         end
+
+        # keep same blocks order as in template
+        ordered_blocks = {}
+        template_blocks.keys.each { |k| ordered_blocks[k] = self._blocks[k] }
+        self._blocks = ordered_blocks
 
         # update page name
         self._name = name

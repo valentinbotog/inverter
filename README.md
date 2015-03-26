@@ -62,6 +62,10 @@ An example of editable template with three content blocks and page name (to iden
   <!--// About //-->
   <h1>About</h1>
 
+  <!--[ hero : inverter-image ]-->
+    <%= image_tag('hero-1.png', alt: 'Welcome to Inverter') %>
+  <!--END-->
+
   <!--[ subtitle ]-->
   <p>
     This is an example of the content block named subtitle. This content is editable
