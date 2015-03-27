@@ -1,3 +1,15 @@
+# -----------------------------------------------------------------------------
+# Author: Alexander Kravets <alex@slatestudio.com>,
+#         Slate Studio (http://www.slatestudio.com)
+#
+# Coding Guide:
+#   https://github.com/thoughtbot/guides/tree/master/style/coffeescript
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+# INPUT INVERTER
+# -----------------------------------------------------------------------------
+
 # _slugify(string)
 if ! @_slugify
   @_slugify = (string) ->
@@ -7,19 +19,19 @@ if ! @_slugify
       .replace(/\-\-+/g, '-')         # Replace multiple - with single -
       .trim()                         # Trim - from start/end of text
 
-# -----------------------------------------------------------------------------
-# INPUT HASH
-# -----------------------------------------------------------------------------
+
 class @InputInverter
   constructor: (@name, @value, @config, @object) ->
+    @startsWith = @config.startsWith
     @_createEl()
 
     @inputs = {}
 
     for name, value of @value
-      input = @_addInput(name, value, @config)
-      @inputs[name] = input
-      @$el.append input.$el
+      if ! @startsWith || name.startsWith(@startsWith)
+        input = @_addInput(name, value, @config)
+        @inputs[name] = input
+        @$el.append input.$el
 
     return this
 
@@ -31,6 +43,10 @@ class @InputInverter
 
     # input label
     inputConfig.label = labelAndType[0].titleize()
+
+    # update label if @startsWith is used
+    if @startsWith
+      inputConfig.label = inputConfig.label.replace(@startsWith, '').titleize()
 
     # input type
     inputType  = labelAndType[1]
