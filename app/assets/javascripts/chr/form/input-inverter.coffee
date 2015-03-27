@@ -28,10 +28,9 @@ class @InputInverter
     @inputs = {}
 
     for name, value of @value
-      if ! @startsWith || name.startsWith(@startsWith)
-        input = @_addInput(name, value, @config)
-        @inputs[name] = input
-        @$el.append input.$el
+      input = @_addInput(name, value, @config)
+      @inputs[name] = input
+      @$el.append input.$el
 
     return this
 
@@ -44,10 +43,6 @@ class @InputInverter
     # input label
     inputConfig.label = labelAndType[0].titleize()
 
-    # update label if @startsWith is used
-    if @startsWith
-      inputConfig.label = inputConfig.label.replace(@startsWith, '').titleize()
-
     # input type
     inputType  = labelAndType[1]
     inputType ?= @config.defaultInputType || 'text'
@@ -55,6 +50,14 @@ class @InputInverter
 
     if ! _chrFormInputs[inputType]
       inputType = 'text'
+
+    if @startsWith
+      # update label if @startsWith is used
+      inputConfig.label = inputConfig.label.replace(@startsWith, '').titleize()
+
+      # use hidden input type for blocks that do not start with @startsWith
+      if ! name.startsWith(@startsWith)
+        inputType = 'hidden'
 
     # input css class
     inputConfig.klassName = 'inverter-block-' + _slugify(inputConfig.label)
