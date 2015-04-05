@@ -11,13 +11,16 @@
 # - depends on Loft character plugin for assets management
 # -----------------------------------------------------------------------------
 class @InputInverterImage extends InputString
-  _addInput: ->
+
+  # PRIVATE ===============================================
+
+  _add_input: ->
     @_normalize_value()
 
     @$el.addClass('input-loft-image')
     @$el.addClass('has-value')
 
-    @$input =$ "<input type='hidden' name='#{ @name }' value='#{ @_valueSafe() }' />"
+    @$input =$ "<input type='hidden' name='#{ @name }' value='#{ @_safe_value() }' />"
     @$el.append @$input
 
     @_add_image()
@@ -111,9 +114,7 @@ class @InputInverterImage extends InputString
         @updateValue('')
 
 
-  #
-  # PUBLIC
-  #
+  # PUBLIC ================================================
 
   updateValue: (@value) ->
     @_normalize_value()
@@ -123,7 +124,7 @@ class @InputInverterImage extends InputString
     @_update_alt()
 
 
-_chrFormInputs['inverter-image'] = InputInverterImage
+chr.formInputs['inverter-image'] = InputInverterImage
 
 
 

@@ -1,2 +1,2 @@
-#= require ./chr/form/input-inverter
-#= require ./chr/form/input-inverter-image
+#= require ./input-inverter
+#= require ./input-inverter-image

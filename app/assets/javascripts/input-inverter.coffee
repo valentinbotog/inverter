@@ -23,18 +23,25 @@ if ! @_slugify
 class @InputInverter
   constructor: (@name, @value, @config, @object) ->
     @startsWith = @config.startsWith
-    @_createEl()
+    @_create_el()
 
     @inputs = {}
 
     for name, value of @value
-      input = @_addInput(name, value, @config)
+      input = @_add_input(name, value, @config)
       @inputs[name] = input
       @$el.append input.$el
 
     return this
 
-  _addInput: (name, value) ->
+
+  # PRIVATE ===============================================
+
+  _create_el: ->
+    @$el =$ "<div class='input-#{ @config.type } #{ @config.klassName }'>"
+
+
+  _add_input: (name, value) ->
     inputConfig = $.extend {}, @config
 
     # get input label and type from name, e.g. "Page Title : text"
@@ -48,7 +55,7 @@ class @InputInverter
     inputType ?= @config.defaultInputType || 'text'
     inputType  = $.trim(inputType)
 
-    if ! _chrFormInputs[inputType]
+    if ! chr.formInputs[inputType]
       inputType = 'text'
 
     if @startsWith
@@ -63,25 +70,22 @@ class @InputInverter
     inputConfig.klassName = 'inverter-block-' + _slugify(inputConfig.label)
     inputConfig.klass    ?= 'stacked'
 
-    inputClass = _chrFormInputs[inputType]
+    inputClass = chr.formInputs[inputType]
 
     inputName = if @config.namePrefix then "#{ @config.namePrefix }#{ @name }[#{ name }]" else "#{ @name }[#{ name }]"
     inputConfig.namePrefix = @config.namePrefix
 
     return new inputClass(inputName, value, inputConfig, @object)
 
-  _createEl: ->
-    @$el =$ "<div class='input-#{ @config.type } #{ @config.klassName }'>"
 
-  #
-  # PUBLIC
-  #
+  # PUBLIC ================================================
 
   initialize: ->
     for name, input of @inputs
       input.initialize()
 
     @config.onInitialize?(this)
+
 
   hash: (hash={}) ->
     obj = {}
@@ -90,20 +94,18 @@ class @InputInverter
     hash[@config.klassName] = obj
     return hash
 
+
   updateValue: (@value) ->
     for key, input of @inputs
       input.updateValue(@value[key])
 
-  showErrorMessage: (message) ->
-    @$el.addClass 'error'
-    @$errorMessage.html(message)
 
-  hideErrorMessage: ->
-    @$el.removeClass 'error'
-    @$errorMessage.html('')
+  showErrorMessage: (message) -> ;
+
+  hideErrorMessage: -> ;
 
 
-_chrFormInputs['inverter'] = InputInverter
+chr.formInputs['inverter'] = InputInverter
 
 
 

@@ -1,8 +1,9 @@
 # Inverter
 
-## Easy way to connect Rails templates content to CMS
+*Easy way to connect Rails templates content to CMS*
 
-Mark right in Rails temlpates content that you want to change via CMS. It's automatically populated to models and is accessible via CMS. While Rails rendering template it's pulling editable content from databased automatically.
+Mark content that you want to change via CMS in Rails templates. It's automatically populated to models and is accessible via CMS. When Rails renders template it pulls editable content from databased automatically.
+
 
 ## Installation
 
@@ -89,6 +90,7 @@ An example of editable template with three content blocks and page name (to iden
   <!--END-->
   ```
 
+
 ### Character Setup
 
 Inverter supports [chr](https://github.com/slate-studio/chr) out of the box. Include custom input in the cms configuration file ```admin.coffee```, and setup module configuration:
@@ -121,6 +123,7 @@ Inverter input has an option ```defaultInputType``` which specifies what input t
 
 You can also specify input type that you want to use for specific block like this: ```<!--[ Main Body : text ]-->``` — in this case ```Main Body``` would be a label and ```text``` is an input type that will be used to edit this block in CMS.
 
+
 ### Meta Tags Support
 
 ```Mongoid::Inverter``` concern includes page meta tags fields. Check out [meta-tags](https://github.com/kpumuk/meta-tags) gem documentation for usage details, it helps to make pages SEO friendly.
@@ -138,17 +141,23 @@ To enable meta-tags support include following helper in application layout:
 
 To override default behavior add custom fields and write own ```update_inverter_meta_tags``` implementation.
 
+
 ## Inverter family
 
-- [Mongosteen](https://github.com/slate-studio/mongosteen): An easy way to add restful actions for mongoid models
-- [Character](https://github.com/slate-studio/chr): A simple and lightweight javascript library for building data management web apps
+- [Mongosteen](https://github.com/slate-studio/mongosteen): An easy way to add RESTful actions for mongoid models
+- [Character](https://github.com/slate-studio/chr): Powerful responsive javascript CMS for apps
+- [Loft](https://github.com/slate-studio/loft): Media assets manager for Character CMS
 
-## Credits
+
+## License
+
+Copyright © 2015 [Slate Studio, LLC](http://slatestudio.com). Inverter is free software, and may be redistributed under the terms specified in the [license](LICENSE.md).
+
+
+## About Slate Studio
 
 [![Slate Studio](https://slate-git-images.s3-us-west-1.amazonaws.com/slate.png)](http://slatestudio.com)
 
 Inverter is maintained and funded by [Slate Studio, LLC](http://slatestudio.com). Tweet your questions or suggestions to [@slatestudio](https://twitter.com/slatestudio) and while you’re at it follow us too.
 
-## License
 
-Copyright © 2015 [Slate Studio, LLC](http://slatestudio.com). Character is free software, and may be redistributed under the terms specified in the [license](LICENSE.md).
