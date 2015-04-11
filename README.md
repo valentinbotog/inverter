@@ -90,15 +90,18 @@ An example of editable template with five content blocks and page name (to ident
 
 <!--[ subtitle ]-->
 <p>
-  This is an example of the content block named subtitle. This content is editable
-  via CMS, please go to website <%= link_to 'admin', admin_path %> and check how
-  it can be changed.</p>
+  Blocks could have not only plain HTML but a Ruby template code as well. For
+  example these links below are going to be rendered and saved as HTML links in
+  the page objects.</p>
+
+<p>
+  This content is editable via CMS, please go to website
+  <%= link_to 'admin', admin_path %> and check how it can be changed.</p>
 <!--END-->
 
 <!--[ body : markdown ]-->
-Blocks could have not only plain HTML but a Ruby template code as well. For
-example these links below are going to be rendered and saved as HTML links in
-the models. You can access [welcome](/welcome) & [about](/about) pages.
+You can use markdown in your views as well. [redcarpet](https://github.com/vmg/redcarpet)
+gem is used as markdown rendere.
 <!--END-->
 
 <!--[ footer ]-->
@@ -109,7 +112,8 @@ the models. You can access [welcome](/welcome) & [about](/about) pages.
 <!--END-->
 
 <!--[ footer_link : inverter-link ]-->
-  <%= link_to 'Slate', 'http://www.slatestudio.com', target: '_blank' %>
+<p>
+  <%= link_to 'Slate', 'http://www.slatestudio.com', target: '_blank' %></p>
 <!--END-->
 ```
 
@@ -152,16 +156,14 @@ blocks: { type: 'inverter', defaultInputType: 'redactor' }
 You can also specify input type that you want to use for specific block like this: ```<!--[ Main Body : text ]-->``` — in this case ```Main Body``` would be a label and ```text``` is an input type that will be used to edit this block in CMS.
 
 
-### Reset Pages
+### Rake Tasks
 
-Run this command from ```rails c```:
+To **reset** all inverter objects to template defaults run: ```rake inverter:reset```.
 
-```ruby
-Page.delete_all ; Page.sync_with_templates!
-```
+To **sync** all inverter objects with template changes run: ```rake inverter:sync```.
 
 
-## Inverter family:
+## Inverter Family:
 
 - [Mongosteen](https://github.com/slate-studio/mongosteen): An easy way to add RESTful actions for Mongoid models
 - [Inverter](https://github.com/slate-studio/inverter): An easy way to connect Rails templates content to Character CMS
