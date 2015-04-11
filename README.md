@@ -158,9 +158,13 @@ You can also specify input type that you want to use for specific block like thi
 
 ### Rake Tasks
 
-To **reset** all inverter objects to template defaults run: ```rake inverter:reset```.
+To reset all inverter objects to template defaults run:
 
-To **sync** all inverter objects with template changes run: ```rake inverter:sync```.
+    rake inverter:reset
+
+To sync all inverter objects with template changes run:
+
+    rake inverter:sync
 
 
 ## Inverter Family:
