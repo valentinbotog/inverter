@@ -27,6 +27,7 @@ pulled from databased automatically.
   s.add_dependency("meta-tags",       ">= 2.0")
   s.add_dependency("mongoid-history", ">= 0.4.7")
   s.add_dependency("mongoid-slug",    ">= 4.0.0")
+  s.add_dependency("redcarpet",       ">= 3.2.3")
 end
 
 

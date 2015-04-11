@@ -41,7 +41,7 @@ Setup admin page controller configuration ```controllers/admin/pages_controller.
 ```ruby
 class Admin::PagesController < Admin::BaseController
   mongosteen
-  json_config({ methods: [ :list_item_title, version_options ])
+  json_config({ methods: [ :list_item_title, :version_options ])
 
   before_filter :syncronize_templates, only: [ :index ]
 
@@ -138,7 +138,7 @@ pagesConfig = ->
     _page_description: { type: 'text',   label: 'Description'           }
     _page_keywords:    { type: 'text',   label: 'Keywords'              }
     _page_image_url:   { type: 'string', label: 'Image URL'             }
-    blocks:            { type: 'inverter'                               }
+    _blocks:           { type: 'inverter'                               }
 ```
 
 Inverer ```version``` input allows to select previous version of the page to edit.

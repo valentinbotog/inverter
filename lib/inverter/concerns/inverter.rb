@@ -89,24 +89,9 @@ module Mongoid
       end
 
 
-      # updates blocks in provided html with values from the
-      # objects _blocks hash
+      # updates blocks in html with objects _blocks hash values
       def update_html(html)
-        # TO BE ADDED: extend with markdown support
-
-        map = ::Inverter::Parser.map_blocks_for(html)
-
-        offset = 0
-
-        map.each do |name, pos|
-          block = "\n" + self._blocks[name] + "\n"
-          html[offset+pos[0]..offset+pos[1]] = block
-
-          block_size          = block.size
-          template_block_size = pos[1] - pos[0]
-          offset             += block_size - template_block_size - 1
-        end
-
+        html = ::Inverter::Renderer.render(html, self._blocks)
         return html
       end
 
