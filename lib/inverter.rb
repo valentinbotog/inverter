@@ -5,13 +5,14 @@ require "redcarpet"
 
 require "inverter/concerns/inverter"
 require "inverter/object"
+require "inverter/middleware"
 require "inverter/controller_helper"
 require "inverter/configuration"
 require "inverter/parser"
 require "inverter/renderer"
 require "inverter/version"
-require "inverter/engine"
 require "inverter/template_renderer_helper"
+require "inverter/engine"
 
 module Inverter
   extend Configuration

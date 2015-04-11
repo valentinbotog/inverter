@@ -36,26 +36,14 @@ class Page
 end
 ```
 
-Setup admin page controller configuration ```controllers/admin/pages_controller.rb```, this keeps models in sync with template files changes:
+Setup admin page controller configuration ```controllers/admin/pages_controller.rb```:
 
 ```ruby
 class Admin::PagesController < Admin::BaseController
   mongosteen
   json_config({ methods: [ :list_item_title, :version_options ])
-
-  before_filter :syncronize_templates, only: [ :index ]
-
-  protected
-
-    def syncronize_templates
-      if Rails.env.development?
-        resource_class.sync_with_templates!
-      end
-    end
 end
 ```
-
-Controller filter above tracks changes in editable templates on every ```index``` request. This helps to keep models up to date while app development. If new template added to folders it's linked automatically and removed if existing one deleted. Editable piece of content in the template is called name, each block should be named.
 
 
 ### Meta Tags
@@ -117,7 +105,14 @@ gem is used as markdown rendere.
 <!--END-->
 ```
 
-*Add information here on how page objects are syncronized with Rails templates.*
+
+### Middleware
+
+Inverter middleware helps to keep inverter objects up to date with template changes in development environment.
+
+If new template added to tracked folders it's linked automatically and correspoding inverter object created. After tracked template deleted a tracking inverter object is removed as well.
+
+It also watches changes in templates: adding new blocks and removing existing ones. When block is renamed inverter thinks that the new one added and previous removed so content for the previous is lost.
 
 
 ### Character Configuration
@@ -162,16 +157,20 @@ To reset all inverter objects to template defaults run:
 
     rake inverter:reset
 
+**You need to run this rake task manually after first production deploy.** Middleware synchronizes objects only for development mode.
+
 To sync all inverter objects with template changes run:
 
     rake inverter:sync
 
+**You might need to run this command on production after deploy if some templates blocks were changed.**
+
 
 ## Inverter Family:
 
+- [Character](https://github.com/slate-studio/chr): Powerful responsive javascript CMS for apps
 - [Mongosteen](https://github.com/slate-studio/mongosteen): An easy way to add RESTful actions for Mongoid models
 - [Inverter](https://github.com/slate-studio/inverter): An easy way to connect Rails templates content to Character CMS
-- [Character](https://github.com/slate-studio/chr): Powerful responsive javascript CMS for apps
 - [Loft](https://github.com/slate-studio/loft): Media assets manager for Character CMS
 
 
