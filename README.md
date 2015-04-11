@@ -58,7 +58,7 @@ end
 Controller filter above tracks changes in editable templates on every ```index``` request. This helps to keep models up to date while app development. If new template added to folders it's linked automatically and removed if existing one deleted. Editable piece of content in the template is called name, each block should be named.
 
 
-### Meta Tags Support
+### Meta Tags
 
 ```Mongoid::Inverter``` concern includes page meta tags fields. Check out [meta-tags](https://github.com/kpumuk/meta-tags) gem documentation for usage details, it helps to make pages SEO friendly.
 
@@ -113,6 +113,8 @@ the models. You can access [welcome](/welcome) & [about](/about) pages.
 <!--END-->
 ```
 
+*Add information here on how page objects are syncronized with Rails templates.*
+
 
 ### Character Configuration
 
@@ -126,7 +128,7 @@ pagesConfig = ->
   itemTitleField: 'list_item_title'
   disableNewItems: true
   disableDelete:   true
-  arrayStore: new MongosteenArrayStore({
+  arrayStore: new RailsArrayStore({
     resource: 'page'
     path:     '/admin/pages'
   })
@@ -150,7 +152,7 @@ blocks: { type: 'inverter', defaultInputType: 'redactor' }
 You can also specify input type that you want to use for specific block like this: ```<!--[ Main Body : text ]-->``` — in this case ```Main Body``` would be a label and ```text``` is an input type that will be used to edit this block in CMS.
 
 
-### Manually Reset Pages
+### Reset Pages
 
 Run this command from ```rails c```:
 
@@ -161,9 +163,9 @@ Page.delete_all ; Page.sync_with_templates!
 
 ## Inverter family:
 
-- [Character](https://github.com/slate-studio/chr): Powerful responsive javascript CMS for apps
 - [Mongosteen](https://github.com/slate-studio/mongosteen): An easy way to add RESTful actions for Mongoid models
 - [Inverter](https://github.com/slate-studio/inverter): An easy way to connect Rails templates content to Character CMS
+- [Character](https://github.com/slate-studio/chr): Powerful responsive javascript CMS for apps
 - [Loft](https://github.com/slate-studio/loft): Media assets manager for Character CMS
 
 
