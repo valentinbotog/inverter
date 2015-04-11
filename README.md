@@ -5,7 +5,7 @@
 Mark content that you want to change via CMS in Rails templates. It's automatically populated to models and is accessible via CMS. When Rails renders template it pulls editable content from databased automatically.
 
 
-## Installation
+## Setup
 
 Add to ```Gemfile```:
 
@@ -57,7 +57,28 @@ end
 
 Controller filter above tracks changes in editable templates on every ```index``` request. This helps to keep models up to date while app development. If new template added to folders it's linked automatically and removed if existing one deleted. Editable piece of content in the template is called name, each block should be named.
 
-An example of editable template with three content blocks and page name (to identify page in CMS), e.g. ```pages/about.html.erb```:
+
+### Meta Tags Support
+
+```Mongoid::Inverter``` concern includes page meta tags fields. Check out [meta-tags](https://github.com/kpumuk/meta-tags) gem documentation for usage details, it helps to make pages SEO friendly.
+
+To enable meta-tags support include following helper in application layout:
+
+```erb
+<%= display_meta_tags title:       'Default Website Title',
+                      description: 'Default Website Description',
+                      open_graph: { type:        'website',
+                                    title:       'Default Website Title',
+                                    description: 'Default Website Description',
+                                    image:       'https://slate-git-images.s3-us-west-1.amazonaws.com/slate.png' } %>
+```
+
+To override default behavior add custom fields and write own ```update_inverter_meta_tags``` implementation.
+
+
+### View Example
+
+An example of editable template with five content blocks and page name (to identify page in CMS), e.g. ```pages/about.html.erb```:
 
 ```html
 <!--// About //-->
@@ -74,12 +95,10 @@ An example of editable template with three content blocks and page name (to iden
   it can be changed.</p>
 <!--END-->
 
-<!--[ body : inverter-markdown ]-->
-<p>
-  Blocks could have not only plain HTML but a Ruby template code as well. For
-  example these links below are going to be rendered and saved as HTML links in
-  the models. You can access <%= link_to 'welcome', page_path('welcome') %> &amp;
-  <%= link_to 'about', page_path('about') %> pages.</p>
+<!--[ body : markdown ]-->
+Blocks could have not only plain HTML but a Ruby template code as well. For
+example these links below are going to be rendered and saved as HTML links in
+the models. You can access [welcome](/welcome) & [about](/about) pages.
 <!--END-->
 
 <!--[ footer ]-->
@@ -95,7 +114,7 @@ An example of editable template with three content blocks and page name (to iden
 ```
 
 
-### Character Setup
+### Character Configuration
 
 Inverter supports [chr](https://github.com/slate-studio/chr) out of the box. Include custom input in the cms configuration file ```admin.coffee```, and setup module configuration:
 
@@ -131,29 +150,12 @@ blocks: { type: 'inverter', defaultInputType: 'redactor' }
 You can also specify input type that you want to use for specific block like this: ```<!--[ Main Body : text ]-->``` — in this case ```Main Body``` would be a label and ```text``` is an input type that will be used to edit this block in CMS.
 
 
-### Meta Tags Support
-
-```Mongoid::Inverter``` concern includes page meta tags fields. Check out [meta-tags](https://github.com/kpumuk/meta-tags) gem documentation for usage details, it helps to make pages SEO friendly.
-
-To enable meta-tags support include following helper in application layout:
-
-```erb
-<%= display_meta_tags title:       'Default Website Title',
-                      description: 'Default Website Description',
-                      open_graph: { type:        'website',
-                                    title:       'Default Website Title',
-                                    description: 'Default Website Description',
-                                    image:       'https://slate-git-images.s3-us-west-1.amazonaws.com/slate.png' } %>
-```
-
-To override default behavior add custom fields and write own ```update_inverter_meta_tags``` implementation.
-
-
 ### Manually Reset Pages
 
+Run this command from ```rails c```:
+
 ```ruby
-Page.delete_all
-Page.sync_with_templates!
+Page.delete_all ; Page.sync_with_templates!
 ```
 
 
@@ -175,5 +177,7 @@ Copyright © 2015 [Slate Studio, LLC](http://slatestudio.com). Inverter is free 
 [![Slate Studio](https://slate-git-images.s3-us-west-1.amazonaws.com/slate.png)](http://slatestudio.com)
 
 Inverter is maintained and funded by [Slate Studio, LLC](http://slatestudio.com). Tweet your questions or suggestions to [@slatestudio](https://twitter.com/slatestudio) and while you’re at it follow us too.
+
+
 
 
