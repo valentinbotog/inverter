@@ -86,7 +86,7 @@ class @InputInverterImage extends InputString
 
     @$chooseBtn.on 'click', (e) =>
       e.preventDefault()
-      chr.modules.assets.showModal 'images', false, (objects) =>
+      chr.modules.loft.showModal 'images', false, (objects) =>
         newSrc = objects[0].file.url
         alt    = @_alt() || objects[0].name
         @_update_value(newSrc, alt)
