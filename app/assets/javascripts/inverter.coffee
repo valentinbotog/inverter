@@ -1,2 +1,3 @@
 #= require ./input-inverter
 #= require ./input-inverter-image
+#= require ./input-inverter-version

@@ -30,7 +30,7 @@ class @InputInverterImage extends InputString
 
 
   _normalize_value: ->
-    if @value.indexOf('<img') > -1
+    if @value && @value.indexOf('<img') > -1
       @value = @value.replace(new RegExp('"', 'g'), "'")
 
       if ! @value.indexOf(' alt=') > -1

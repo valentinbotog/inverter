@@ -3,7 +3,10 @@ module Mongoid
     extend ActiveSupport::Concern
 
     included do
-      # attributes
+      include Mongoid::Slug
+      include Mongoid::History::Trackable
+
+      # ATTRIBUTES
       field :_page_title,         default: ''
       field :_page_description,   default: ''
       field :_page_keywords,      default: ''
@@ -13,16 +16,51 @@ module Mongoid
       field :_name,               default: ''
       field :_blocks, type: Hash, default: {}
 
-      # indexes
+      # HISTORY
+      track_history track_create: true
+      # # telling Mongoid::History how you want to track changes
+      # # dynamic fields will be tracked automatically (for MongoId 4.0+ you should include Mongoid::Attributes::Dynamic to your model)
+      # track_history   :on => [:title, :body],       # track title and body fields only, default is :all
+      #                 :modifier_field => :modifier, # adds "belongs_to :modifier" to track who made the change, default is :modifier
+      #                 :modifier_field_inverse_of => :nil, # adds an ":inverse_of" option to the "belongs_to :modifier" relation, default is not set
+      #                 :version_field => :version,   # adds "field :version, :type => Integer" to track current version, default is :version
+      #                 :track_create   =>  false,    # track document creation, default is false
+      #                 :track_update   =>  true,     # track document updates, default is true
+      #                 :track_destroy  =>  false     # track document destruction, default is false
+
+
+      # INDEXES
       index({ _template_name: 1 })
 
-      # scopes
+      # SCOPES
       default_scope -> { asc(:created_at) }
+
+      # SLUG
+      # used in cms for direct object access
+      slug do |current_object|
+        current_object._template_name.gsub('.html.erb', '').gsub('/', '-')
+      end
 
 
       # returns title to be used in cms and identify page in list
       def list_item_title
         self._name.empty? ? self._template_name : self._name
+      end
+
+
+      # returns list of available object versions
+      def version_options
+        hash = {}
+
+        history_tracks.only(:created_at, :version).collect do |h|
+          hash[h.version] = "Version #{ h.version } — #{ h.created_at }"
+        end
+
+        if hash.empty?
+          hash = { '' => '--' }
+        end
+
+        return hash
       end
 
 
@@ -54,6 +92,8 @@ module Mongoid
       # updates blocks in provided html with values from the
       # objects _blocks hash
       def update_html(html)
+        # TO BE ADDED: extend with markdown support
+
         map = ::Inverter::Parser.map_blocks_for(html)
 
         offset = 0

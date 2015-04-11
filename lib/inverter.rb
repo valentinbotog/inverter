@@ -1,3 +1,7 @@
+require "mongoid_slug"
+require "mongoid-history"
+require "history_tracker"
+
 require "inverter/concerns/inverter"
 require "inverter/object"
 require "inverter/controller_helper"

@@ -25,6 +25,8 @@ pulled from databased automatically.
 
   s.add_dependency("render_anywhere", ">= 0.0.10")
   s.add_dependency("meta-tags",       ">= 2.0")
+  s.add_dependency("mongoid-history", ">= 0.4.7")
+  s.add_dependency("mongoid-slug",    ">= 4.0.0")
 end
 
 

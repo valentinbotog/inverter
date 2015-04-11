@@ -41,7 +41,7 @@ Setup admin page controller configuration ```controllers/admin/pages_controller.
 ```ruby
 class Admin::PagesController < Admin::BaseController
   mongosteen
-  json_config({ methods: [ :list_item_title ])
+  json_config({ methods: [ :list_item_title, version_options ])
 
   before_filter :syncronize_templates, only: [ :index ]
 
@@ -74,7 +74,7 @@ An example of editable template with three content blocks and page name (to iden
   it can be changed.</p>
 <!--END-->
 
-<!--[ body ]-->
+<!--[ body : inverter-markdown ]-->
 <p>
   Blocks could have not only plain HTML but a Ruby template code as well. For
   example these links below are going to be rendered and saved as HTML links in
@@ -87,6 +87,10 @@ An example of editable template with three content blocks and page name (to iden
   This is an example of the content block named footer. This content is editable
   via CMS, please go to website <%= link_to 'admin', admin_path %> and check how
   it can be changed.</p>
+<!--END-->
+
+<!--[ footer_link : inverter-link ]-->
+  <%= link_to 'Slate', 'http://www.slatestudio.com', target: '_blank' %>
 <!--END-->
 ```
 
@@ -108,14 +112,17 @@ pagesConfig = ->
     path:     '/admin/pages'
   })
   formSchema:
-    _page_title:       { type: 'string', label: 'Title'       }
-    _page_description: { type: 'text',   label: 'Description' }
-    _page_keywords:    { type: 'text',   label: 'Keywords' }
-    _page_image_url:   { type: 'string', label: 'Image URL'   }
-    blocks: { type: 'inverter' }
+    version:           { type: 'inverter-version', path: '/admin/pages' }
+    _page_title:       { type: 'string', label: 'Title'                 }
+    _page_description: { type: 'text',   label: 'Description'           }
+    _page_keywords:    { type: 'text',   label: 'Keywords'              }
+    _page_image_url:   { type: 'string', label: 'Image URL'             }
+    blocks:            { type: 'inverter'                               }
 ```
 
-Inverter input has an option ```defaultInputType``` which specifies what input type should be used as default, if nothing specified ```text``` is used. This might be set to WYSIWYG editor of your choice, e.g:
+Inverer ```version``` input allows to select previous version of the page to edit.
+
+Inverter input has an option ```defaultInputType``` that specifies what input type should be used as default, if nothing specified ```text``` is used. This might be set to WYSIWYG editor of your choice, e.g:
 
 ```coffeescript
 blocks: { type: 'inverter', defaultInputType: 'redactor' }
@@ -142,10 +149,19 @@ To enable meta-tags support include following helper in application layout:
 To override default behavior add custom fields and write own ```update_inverter_meta_tags``` implementation.
 
 
-## Inverter family
+### Manually Reset Pages
 
-- [Mongosteen](https://github.com/slate-studio/mongosteen): An easy way to add RESTful actions for mongoid models
+```ruby
+Page.delete_all
+Page.sync_with_templates!
+```
+
+
+## Inverter family:
+
 - [Character](https://github.com/slate-studio/chr): Powerful responsive javascript CMS for apps
+- [Mongosteen](https://github.com/slate-studio/mongosteen): An easy way to add RESTful actions for Mongoid models
+- [Inverter](https://github.com/slate-studio/inverter): An easy way to connect Rails templates content to Character CMS
 - [Loft](https://github.com/slate-studio/loft): Media assets manager for Character CMS
 
 
