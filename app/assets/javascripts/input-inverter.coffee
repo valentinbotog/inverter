@@ -72,8 +72,13 @@ class @InputInverter
 
     inputClass = chr.formInputs[inputType]
 
+    # here we have @config.namePrefix undefined, so the second case works
+    # where @name is [_blocks] and name is the name of the block
     inputName = if @config.namePrefix then "#{ @config.namePrefix }#{ @name }[#{ name }]" else "#{ @name }[#{ name }]"
     inputConfig.namePrefix = @config.namePrefix
+    # add extra config parameter to save the original block name for hash
+    # function to work properly
+    inputConfig.blockName = name
 
     return new inputClass(inputName, value, inputConfig, @object)
 
@@ -89,8 +94,11 @@ class @InputInverter
 
   hash: (hash={}) ->
     obj = {}
+    # workaround for using block names to have consistency
+    # while caching and versioning documents
     for key, input of @inputs
-      input.hash(obj)
+      obj[input.config.blockName] = input.$input.val()
+
     hash[@config.klassName] = obj
     return hash
 
@@ -101,6 +109,7 @@ class @InputInverter
 
 
   showErrorMessage: (message) -> ;
+
 
   hideErrorMessage: -> ;
 

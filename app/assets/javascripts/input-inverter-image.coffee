@@ -8,7 +8,11 @@
 
 # -----------------------------------------------------------------------------
 # INPUT INVERTER IMAGE
-# - depends on Loft character plugin for assets management
+#
+# Dependencies:
+#  - Loft character plugin for assets management
+#  - Chr input string implementation
+#
 # -----------------------------------------------------------------------------
 class @InputInverterImage extends InputString
 
@@ -119,6 +123,7 @@ class @InputInverterImage extends InputString
   updateValue: (@value) ->
     @_normalize_value()
     @$input.val(@value)
+    @$input.trigger('change')
 
     @_update_image()
     @_update_alt()

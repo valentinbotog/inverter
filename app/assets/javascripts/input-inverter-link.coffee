@@ -85,6 +85,8 @@ class @InputInverterLink extends InputString
     @_normalize_value()
 
     @$input.val(@value)
+    @$input.trigger('change')
+
     @$titleInput.val(@_title())
     @$urlInput.val(@_url())
 

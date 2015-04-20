@@ -150,6 +150,12 @@ blocks: { type: 'inverter', defaultInputType: 'redactor' }
 
 You can also specify input type that you want to use for specific block like this: ```<!--[ Main Body : text ]-->``` — in this case ```Main Body``` would be a label and ```text``` is an input type that will be used to edit this block in CMS.
 
+Include inverter styles for cms inputs into character styles configuration file ```admin.scss```
+
+```scss
+@import "inverter";
+```
+
 
 ### Rake Tasks
 
