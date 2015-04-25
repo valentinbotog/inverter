@@ -8,7 +8,10 @@ module Inverter
       # workaround this method so no need to call it if:
       #  - not GET request
       #  - not action request (assets or public files)
-      Inverter.model_class.sync_with_templates!
+
+      if ! Inverter.disable_middleware
+        Inverter.model_class.sync_with_templates!
+      end
 
       @app.call(env)
     end

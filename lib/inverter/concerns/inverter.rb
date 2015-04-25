@@ -3,6 +3,7 @@ module Mongoid
     extend ActiveSupport::Concern
 
     included do
+      include Mongoid::Timestamps
       include Mongoid::Slug
       include Mongoid::History::Trackable
 
@@ -96,11 +97,16 @@ module Mongoid
       end
 
 
+      # returns datetime when template was updated
+      def template_updated_at
+        template_path = Rails.root.to_s + '/app/views/' + self._template_name
+        File.mtime(template_path).getgm
+      end
+
+
       # check if template file was changed after object was saved
       def template_changed?
-        template_path = Rails.root.to_s + '/app/views/' + self._template_name
-        template_time_updated = File.mtime(template_path)
-        template_time_updated > updated_at
+        template_updated_at > updated_at.getgm
       end
 
 
@@ -130,6 +136,9 @@ module Mongoid
         # update page name
         self._name = name
 
+        # force update_at change event the conten not changed
+        self.updated_at = Time.now
+
         save
       end
 
@@ -154,20 +163,31 @@ module Mongoid
 
         # add new objects
         if existing_template_names.size < template_names.size
+          puts "\nCreate Inverter objects for new templates: "
           template_names_to_create = template_names - existing_template_names
-          template_names_to_create.each { |name| create_from_template(name) }
+          template_names_to_create.each do |name|
+            create_from_template(name)
+            puts " - #{ name }"
+          end
         end
 
         # delete object for removed templates
         if existing_template_names.size > template_names.size
+          puts "\nDelete Inverter objects for missing templates: "
           template_names_to_remove = existing_template_names - template_names
-          template_names_to_remove.each { |name| find_by(_template_name: name).delete }
+          template_names_to_remove.each do |name|
+            find_by(_template_name: name).delete
+            puts " - #{ name }"
+          end
         end
 
         # update objects for changes in templates
-        created_objects.each do |o|
-          if o.template_changed?
+        changed_objects = created_objects.select { |o| o.template_changed? }
+        if changed_objects.size > 0
+          puts "\nUpdate Inverter objects for changed templates: "
+          changed_objects.each do |o|
             o.update_from_template!
+            puts " - #{ o._template_name }"
           end
         end
       end

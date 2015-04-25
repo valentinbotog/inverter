@@ -4,7 +4,8 @@ module Inverter
     attr_accessor(
       :model_class,
       :template_folders,
-      :excluded_templates
+      :excluded_templates,
+      :disable_middleware
     )
 
     def configure
@@ -17,6 +18,7 @@ module Inverter
 
     def set_default_configuration
       self.excluded_templates = []
+      self.disable_middleware = false
     end
 
   end
