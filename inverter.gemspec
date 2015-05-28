@@ -28,6 +28,13 @@ pulled from databased automatically.
   s.add_dependency("mongoid-history", ">= 0.4.7")
   s.add_dependency("mongoid-slug",    ">= 4.0.0")
   s.add_dependency("redcarpet",       ">= 3.2.3")
+
+  # automated tests
+  s.add_development_dependency 'rails', '~> 4.1.2'
+  s.add_development_dependency 'database_cleaner'
+  s.add_development_dependency 'factory_girl_rails'
+  s.add_development_dependency 'minitest-reporters'
+  s.add_development_dependency 'minitest-focus'
 end
 
 
