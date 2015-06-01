@@ -1,0 +1,23 @@
+---------------------------------------------------------------
+ParserTest: test_returns_empty_hash_for_template_without_blocks
+---------------------------------------------------------------
+---------------------------------------------
+ParserTest: test_parses_templates_with_blocks
+---------------------------------------------
+  Rendered inline template (2.1ms)
+  Rendered inline template (0.3ms)
+  Rendered inline template (0.2ms)
+  Rendered inline template (0.2ms)
+---------------------------------------------------------------
+ParserTest: test_returns_empty_hash_for_template_without_blocks
+---------------------------------------------------------------
+---------------------------------------------
+ParserTest: test_parses_templates_with_blocks
+---------------------------------------------
+  Rendered inline template (1.4ms)
+  Rendered inline template (0.1ms)
+  Rendered inline template (0.2ms)
+  Rendered inline template (0.2ms)
+---------------------------------------------------------------
+ParserTest: test_returns_empty_hash_for_template_without_blocks
+---------------------------------------------------------------
