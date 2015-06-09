@@ -7,7 +7,7 @@ require 'rdoc/task'
 desc 'Default: run tests for all ORMs.'
 task default: :test
 
-desc 'Run Devise unit tests.'
+desc 'Run Inverter unit tests.'
 Rake::TestTask.new(:test) do |t|
   t.libs << 'lib'
   t.libs << 'test'
