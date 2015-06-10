@@ -1703,3 +1703,910 @@ RendererTest: test_doesn't_change_html_without_blocks
                          COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4250ms
   MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
                          COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4010ms
+---------------------------------------------
+ParserTest: test_parses_templates_with_blocks
+---------------------------------------------
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 11.5980ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 6.1440ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 4.6080ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 1.1280ms
+  Rendered inline template (1.7ms)
+  Rendered inline template (0.2ms)
+  Rendered inline template (0.1ms)
+  Rendered inline template (0.2ms)
+---------------------------------------------------------------
+ParserTest: test_returns_empty_hash_for_template_without_blocks
+---------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.6020ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3430ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2530ms
+------------------------------------------
+RendererTest: test_change_html_with_blocks
+------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.6520ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4520ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3320ms
+-----------------------------------------------------
+RendererTest: test_doesn't_change_html_without_blocks
+-----------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.7180ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3600ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2760ms
+---------------------------------------------
+MetaTagsTest: test_meta_tags_render_correctly
+---------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.6650ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3450ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3250ms
+------------------------------------------------------------------------------
+SyncTest: test_check_synchronization_of_templates_with_models_on_block_removal
+------------------------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.6210ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3880ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3200ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 3.0640ms
+  Rendered inline template (0.3ms)
+  Rendered inline template (0.5ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"_slugs"=>{"$all"=>[/^pages\-about(?:-(\d+))?$/]}, "_id"=>{"$ne"=>BSON::ObjectId('557837076e6b752ebd000000')}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 8.9650ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('557837076e6b752ebd010000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('557837076e6b752ebd000000')}], "scope"=>"page", "original"=>{}, "modified"=>{"_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb"}, "version"=>1, "action"=>"create", "updated_at"=>2015-06-10 13:09:27 UTC, "created_at"=>2015-06-10 13:09:27 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 5.7180ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=pages documents=[{"_id"=>BSON::ObjectId('557837076e6b752ebd000000'), "_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb", "updated_at"=>2015-06-10 13:09:27 UTC, "created_at"=>2015-06-10 13:09:27 UTC, "version"=>1}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.6800ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 1.5330ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.4610ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('557837076e6b752ebd000000')} update={"$set"=>{"updated_at"=>2015-06-09 00:00:00 UTC}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 2.7490ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4770ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3300ms
+  Rendered inline template (0.4ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('557837076e6b752ebd020000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('557837076e6b752ebd000000')}], "scope"=>"page", "original"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}}, "modified"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}}, "version"=>2, "action"=>"update", "updated_at"=>2015-06-10 13:09:27 UTC, "created_at"=>2015-06-10 13:09:27 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.6560ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('557837076e6b752ebd000000')} update={"$set"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}, "updated_at"=>2015-06-10 13:09:27 UTC, "version"=>2}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 2.3460ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=inverter_test command={:count=>"pages", :query=>{}} runtime: 1.4320ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.7000ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.5890ms
+-------------------------------------------------------------------------------
+SyncTest: test_check_synchronization_of_templates_with_models_on_block_creation
+-------------------------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5980ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5180ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4210ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3660ms
+  Rendered inline template (0.3ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"_slugs"=>{"$all"=>[/^pages\-about(?:-(\d+))?$/]}, "_id"=>{"$ne"=>BSON::ObjectId('557837076e6b752ebd030000')}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5860ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('557837076e6b752ebd040000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('557837076e6b752ebd030000')}], "scope"=>"page", "original"=>{}, "modified"=>{"_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb"}, "version"=>1, "action"=>"create", "updated_at"=>2015-06-10 13:09:27 UTC, "created_at"=>2015-06-10 13:09:27 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 1.1700ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=pages documents=[{"_id"=>BSON::ObjectId('557837076e6b752ebd030000'), "_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb", "updated_at"=>2015-06-10 13:09:27 UTC, "created_at"=>2015-06-10 13:09:27 UTC, "version"=>1}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.7010ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.9330ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 2.2810ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('557837076e6b752ebd030000')} update={"$set"=>{"updated_at"=>2015-06-09 00:00:00 UTC}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4740ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4220ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3280ms
+  Rendered inline template (0.5ms)
+  Rendered inline template (0.2ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('557837076e6b752ebd050000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('557837076e6b752ebd030000')}], "scope"=>"page", "original"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}}, "modified"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}}, "version"=>2, "action"=>"update", "updated_at"=>2015-06-10 13:09:27 UTC, "created_at"=>2015-06-10 13:09:27 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.6170ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('557837076e6b752ebd030000')} update={"$set"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "updated_at"=>2015-06-10 13:09:27 UTC, "version"=>2}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5680ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=inverter_test command={:count=>"pages", :query=>{}} runtime: 0.2900ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3600ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3190ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3730ms
+---------------------------------------------------------------------
+SyncTest: test_check_initial_synchronization_of_templates_with_models
+---------------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4150ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4210ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4040ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4890ms
+  Rendered inline template (0.8ms)
+  Rendered inline template (0.4ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"_slugs"=>{"$all"=>[/^pages\-about(?:-(\d+))?$/]}, "_id"=>{"$ne"=>BSON::ObjectId('557837076e6b752ebd060000')}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.7700ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('557837076e6b752ebd070000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('557837076e6b752ebd060000')}], "scope"=>"page", "original"=>{}, "modified"=>{"_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb"}, "version"=>1, "action"=>"create", "updated_at"=>2015-06-10 13:09:27 UTC, "created_at"=>2015-06-10 13:09:27 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5060ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=pages documents=[{"_id"=>BSON::ObjectId('557837076e6b752ebd060000'), "_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb", "updated_at"=>2015-06-10 13:09:27 UTC, "created_at"=>2015-06-10 13:09:27 UTC, "version"=>1}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4090ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 1.0370ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=inverter_test command={:count=>"pages", :query=>{}} runtime: 0.3710ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3820ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3270ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.2960ms
+---------------------------------------------
+MetaTagsTest: test_meta_tags_render_correctly
+---------------------------------------------
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 1.0340ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4560ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3750ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3420ms
+Started GET "/meta_tags" for 127.0.0.1 at 2015-06-10 16:11:29 +0300
+------------------------------------------
+RendererTest: test_change_html_with_blocks
+------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.7800ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3600ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3620ms
+-----------------------------------------------------
+RendererTest: test_doesn't_change_html_without_blocks
+-----------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.6100ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4080ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4880ms
+------------------------------------------------------------------------------
+SyncTest: test_check_synchronization_of_templates_with_models_on_block_removal
+------------------------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5450ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2970ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2680ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3190ms
+  Rendered inline template (0.8ms)
+  Rendered inline template (0.2ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"_slugs"=>{"$all"=>[/^pages\-about(?:-(\d+))?$/]}, "_id"=>{"$ne"=>BSON::ObjectId('557837816e6b752f28000000')}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5360ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('557837816e6b752f28010000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('557837816e6b752f28000000')}], "scope"=>"page", "original"=>{}, "modified"=>{"_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb"}, "version"=>1, "action"=>"create", "updated_at"=>2015-06-10 13:11:29 UTC, "created_at"=>2015-06-10 13:11:29 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.6300ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=pages documents=[{"_id"=>BSON::ObjectId('557837816e6b752f28000000'), "_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb", "updated_at"=>2015-06-10 13:11:29 UTC, "created_at"=>2015-06-10 13:11:29 UTC, "version"=>1}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3260ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5130ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.4170ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('557837816e6b752f28000000')} update={"$set"=>{"updated_at"=>2015-06-09 00:00:00 UTC}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.6760ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 1.3300ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4230ms
+  Rendered inline template (0.2ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('557837816e6b752f28020000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('557837816e6b752f28000000')}], "scope"=>"page", "original"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}}, "modified"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}}, "version"=>2, "action"=>"update", "updated_at"=>2015-06-10 13:11:29 UTC, "created_at"=>2015-06-10 13:11:29 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.6650ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('557837816e6b752f28000000')} update={"$set"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}, "updated_at"=>2015-06-10 13:11:29 UTC, "version"=>2}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4330ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=inverter_test command={:count=>"pages", :query=>{}} runtime: 0.3990ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.5820ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.2930ms
+-------------------------------------------------------------------------------
+SyncTest: test_check_synchronization_of_templates_with_models_on_block_creation
+-------------------------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3190ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3090ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3170ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.2490ms
+  Rendered inline template (0.6ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"_slugs"=>{"$all"=>[/^pages\-about(?:-(\d+))?$/]}, "_id"=>{"$ne"=>BSON::ObjectId('557837816e6b752f28030000')}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4480ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('557837816e6b752f28040000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('557837816e6b752f28030000')}], "scope"=>"page", "original"=>{}, "modified"=>{"_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb"}, "version"=>1, "action"=>"create", "updated_at"=>2015-06-10 13:11:29 UTC, "created_at"=>2015-06-10 13:11:29 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4510ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=pages documents=[{"_id"=>BSON::ObjectId('557837816e6b752f28030000'), "_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb", "updated_at"=>2015-06-10 13:11:29 UTC, "created_at"=>2015-06-10 13:11:29 UTC, "version"=>1}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3290ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3420ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.5190ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('557837816e6b752f28030000')} update={"$set"=>{"updated_at"=>2015-06-09 00:00:00 UTC}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5490ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4140ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.2920ms
+  Rendered inline template (0.3ms)
+  Rendered inline template (0.3ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('557837816e6b752f28050000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('557837816e6b752f28030000')}], "scope"=>"page", "original"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}}, "modified"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}}, "version"=>2, "action"=>"update", "updated_at"=>2015-06-10 13:11:29 UTC, "created_at"=>2015-06-10 13:11:29 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 1.2100ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('557837816e6b752f28030000')} update={"$set"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "updated_at"=>2015-06-10 13:11:29 UTC, "version"=>2}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.6800ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=inverter_test command={:count=>"pages", :query=>{}} runtime: 0.4770ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3970ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.5170ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3800ms
+---------------------------------------------------------------------
+SyncTest: test_check_initial_synchronization_of_templates_with_models
+---------------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3760ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3580ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3110ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3970ms
+  Rendered inline template (0.5ms)
+  Rendered inline template (0.4ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"_slugs"=>{"$all"=>[/^pages\-about(?:-(\d+))?$/]}, "_id"=>{"$ne"=>BSON::ObjectId('557837816e6b752f28060000')}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5240ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('557837816e6b752f28070000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('557837816e6b752f28060000')}], "scope"=>"page", "original"=>{}, "modified"=>{"_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb"}, "version"=>1, "action"=>"create", "updated_at"=>2015-06-10 13:11:29 UTC, "created_at"=>2015-06-10 13:11:29 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5750ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=pages documents=[{"_id"=>BSON::ObjectId('557837816e6b752f28060000'), "_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb", "updated_at"=>2015-06-10 13:11:29 UTC, "created_at"=>2015-06-10 13:11:29 UTC, "version"=>1}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.7550ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5290ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=inverter_test command={:count=>"pages", :query=>{}} runtime: 0.6240ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.7250ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3610ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.5230ms
+---------------------------------------------
+ParserTest: test_parses_templates_with_blocks
+---------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5260ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4230ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3400ms
+  Rendered inline template (0.2ms)
+  Rendered inline template (1.3ms)
+  Rendered inline template (1.2ms)
+  Rendered inline template (0.6ms)
+---------------------------------------------------------------
+ParserTest: test_returns_empty_hash_for_template_without_blocks
+---------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.6860ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.6460ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5550ms
+------------------------------------------------------------------------------
+SyncTest: test_check_synchronization_of_templates_with_models_on_block_removal
+------------------------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 1.2770ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.6660ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5200ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4160ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3750ms
+  Rendered inline template (0.9ms)
+  Rendered inline template (0.3ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"_slugs"=>{"$all"=>[/^pages\-about(?:-(\d+))?$/]}, "_id"=>{"$ne"=>BSON::ObjectId('5578382e6e6b752fca000000')}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5920ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('5578382e6e6b752fca010000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('5578382e6e6b752fca000000')}], "scope"=>"page", "original"=>{}, "modified"=>{"_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb"}, "version"=>1, "action"=>"create", "updated_at"=>2015-06-10 13:14:22 UTC, "created_at"=>2015-06-10 13:14:22 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.7170ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=pages documents=[{"_id"=>BSON::ObjectId('5578382e6e6b752fca000000'), "_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb", "updated_at"=>2015-06-10 13:14:22 UTC, "created_at"=>2015-06-10 13:14:22 UTC, "version"=>1}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4170ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3930ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3920ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('5578382e6e6b752fca000000')} update={"$set"=>{"updated_at"=>2015-06-09 00:00:00 UTC}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4070ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4910ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3320ms
+  Rendered inline template (0.2ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('5578382e6e6b752fca020000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('5578382e6e6b752fca000000')}], "scope"=>"page", "original"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}}, "modified"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}}, "version"=>2, "action"=>"update", "updated_at"=>2015-06-10 13:14:22 UTC, "created_at"=>2015-06-10 13:14:22 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4550ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('5578382e6e6b752fca000000')} update={"$set"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}, "updated_at"=>2015-06-10 13:14:22 UTC, "version"=>2}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3490ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=inverter_test command={:count=>"pages", :query=>{}} runtime: 0.2130ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3330ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.4440ms
+-------------------------------------------------------------------------------
+SyncTest: test_check_synchronization_of_templates_with_models_on_block_creation
+-------------------------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4460ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2870ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2330ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4110ms
+  Rendered inline template (0.3ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"_slugs"=>{"$all"=>[/^pages\-about(?:-(\d+))?$/]}, "_id"=>{"$ne"=>BSON::ObjectId('5578382e6e6b752fca030000')}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.6200ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('5578382e6e6b752fca040000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('5578382e6e6b752fca030000')}], "scope"=>"page", "original"=>{}, "modified"=>{"_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb"}, "version"=>1, "action"=>"create", "updated_at"=>2015-06-10 13:14:22 UTC, "created_at"=>2015-06-10 13:14:22 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.7810ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=pages documents=[{"_id"=>BSON::ObjectId('5578382e6e6b752fca030000'), "_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb", "updated_at"=>2015-06-10 13:14:22 UTC, "created_at"=>2015-06-10 13:14:22 UTC, "version"=>1}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5510ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4330ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.6390ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('5578382e6e6b752fca030000')} update={"$set"=>{"updated_at"=>2015-06-09 00:00:00 UTC}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.9820ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5360ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3730ms
+  Rendered inline template (0.3ms)
+  Rendered inline template (0.2ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('5578382e6e6b752fca050000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('5578382e6e6b752fca030000')}], "scope"=>"page", "original"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}}, "modified"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}}, "version"=>2, "action"=>"update", "updated_at"=>2015-06-10 13:14:22 UTC, "created_at"=>2015-06-10 13:14:22 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.6090ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('5578382e6e6b752fca030000')} update={"$set"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "updated_at"=>2015-06-10 13:14:22 UTC, "version"=>2}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.6670ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=inverter_test command={:count=>"pages", :query=>{}} runtime: 0.2820ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3770ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3780ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3440ms
+---------------------------------------------------------------------
+SyncTest: test_check_initial_synchronization_of_templates_with_models
+---------------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4400ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4290ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3860ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.2470ms
+  Rendered inline template (0.3ms)
+  Rendered inline template (0.2ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"_slugs"=>{"$all"=>[/^pages\-about(?:-(\d+))?$/]}, "_id"=>{"$ne"=>BSON::ObjectId('5578382e6e6b752fca060000')}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4500ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('5578382e6e6b752fca070000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('5578382e6e6b752fca060000')}], "scope"=>"page", "original"=>{}, "modified"=>{"_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb"}, "version"=>1, "action"=>"create", "updated_at"=>2015-06-10 13:14:22 UTC, "created_at"=>2015-06-10 13:14:22 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4090ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=pages documents=[{"_id"=>BSON::ObjectId('5578382e6e6b752fca060000'), "_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb", "updated_at"=>2015-06-10 13:14:22 UTC, "created_at"=>2015-06-10 13:14:22 UTC, "version"=>1}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3260ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4720ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=inverter_test command={:count=>"pages", :query=>{}} runtime: 0.3520ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.4080ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.4980ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.5020ms
+---------------------------------------------
+MetaTagsTest: test_meta_tags_render_correctly
+---------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3570ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3180ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2740ms
+Started GET "/meta_tags" for 127.0.0.1 at 2015-06-10 16:14:22 +0300
+---------------------------------------------
+ParserTest: test_parses_templates_with_blocks
+---------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 1.3500ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 1.8830ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 1.0680ms
+  Rendered inline template (0.3ms)
+  Rendered inline template (0.3ms)
+  Rendered inline template (0.3ms)
+  Rendered inline template (0.2ms)
+---------------------------------------------------------------
+ParserTest: test_returns_empty_hash_for_template_without_blocks
+---------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.8550ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5780ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3260ms
+------------------------------------------
+RendererTest: test_change_html_with_blocks
+------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 1.3420ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4610ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5200ms
+-----------------------------------------------------
+RendererTest: test_doesn't_change_html_without_blocks
+-----------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.6890ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3340ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2260ms
+------------------------------------------------------------------------------
+SyncTest: test_check_synchronization_of_templates_with_models_on_block_removal
+------------------------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 2.9100ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.7410ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3220ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3050ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3250ms
+  Rendered inline template (9.3ms)
+  Rendered inline template (0.3ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"_slugs"=>{"$all"=>[/^pages\-about(?:-(\d+))?$/]}, "_id"=>{"$ne"=>BSON::ObjectId('557838966e6b753063000000')}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5290ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('557838966e6b753063010000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('557838966e6b753063000000')}], "scope"=>"page", "original"=>{}, "modified"=>{"_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb"}, "version"=>1, "action"=>"create", "updated_at"=>2015-06-10 13:16:06 UTC, "created_at"=>2015-06-10 13:16:06 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 1.0670ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=pages documents=[{"_id"=>BSON::ObjectId('557838966e6b753063000000'), "_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb", "updated_at"=>2015-06-10 13:16:06 UTC, "created_at"=>2015-06-10 13:16:06 UTC, "version"=>1}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4900ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3780ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.4120ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('557838966e6b753063000000')} update={"$set"=>{"updated_at"=>2015-06-09 00:00:00 UTC}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4000ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3970ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4010ms
+  Rendered inline template (0.2ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('557838966e6b753063020000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('557838966e6b753063000000')}], "scope"=>"page", "original"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}}, "modified"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}}, "version"=>2, "action"=>"update", "updated_at"=>2015-06-10 13:16:06 UTC, "created_at"=>2015-06-10 13:16:06 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5300ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('557838966e6b753063000000')} update={"$set"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}, "updated_at"=>2015-06-10 13:16:06 UTC, "version"=>2}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5580ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=inverter_test command={:count=>"pages", :query=>{}} runtime: 0.3580ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.4630ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3180ms
+-------------------------------------------------------------------------------
+SyncTest: test_check_synchronization_of_templates_with_models_on_block_creation
+-------------------------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3050ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4050ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2680ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4430ms
+  Rendered inline template (0.7ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"_slugs"=>{"$all"=>[/^pages\-about(?:-(\d+))?$/]}, "_id"=>{"$ne"=>BSON::ObjectId('557838966e6b753063030000')}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5160ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('557838966e6b753063040000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('557838966e6b753063030000')}], "scope"=>"page", "original"=>{}, "modified"=>{"_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb"}, "version"=>1, "action"=>"create", "updated_at"=>2015-06-10 13:16:06 UTC, "created_at"=>2015-06-10 13:16:06 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5770ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=pages documents=[{"_id"=>BSON::ObjectId('557838966e6b753063030000'), "_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb", "updated_at"=>2015-06-10 13:16:06 UTC, "created_at"=>2015-06-10 13:16:06 UTC, "version"=>1}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5120ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5360ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.4340ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('557838966e6b753063030000')} update={"$set"=>{"updated_at"=>2015-06-09 00:00:00 UTC}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3540ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3650ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4030ms
+  Rendered inline template (0.3ms)
+  Rendered inline template (0.2ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('557838966e6b753063050000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('557838966e6b753063030000')}], "scope"=>"page", "original"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}}, "modified"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}}, "version"=>2, "action"=>"update", "updated_at"=>2015-06-10 13:16:06 UTC, "created_at"=>2015-06-10 13:16:06 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5090ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('557838966e6b753063030000')} update={"$set"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "updated_at"=>2015-06-10 13:16:06 UTC, "version"=>2}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3780ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=inverter_test command={:count=>"pages", :query=>{}} runtime: 0.3210ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.4640ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3340ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3190ms
+---------------------------------------------------------------------
+SyncTest: test_check_initial_synchronization_of_templates_with_models
+---------------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3430ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3630ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3760ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3920ms
+  Rendered inline template (0.4ms)
+  Rendered inline template (0.3ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"_slugs"=>{"$all"=>[/^pages\-about(?:-(\d+))?$/]}, "_id"=>{"$ne"=>BSON::ObjectId('557838976e6b753063060000')}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4430ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('557838976e6b753063070000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('557838976e6b753063060000')}], "scope"=>"page", "original"=>{}, "modified"=>{"_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb"}, "version"=>1, "action"=>"create", "updated_at"=>2015-06-10 13:16:07 UTC, "created_at"=>2015-06-10 13:16:07 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5720ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=pages documents=[{"_id"=>BSON::ObjectId('557838976e6b753063060000'), "_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb", "updated_at"=>2015-06-10 13:16:07 UTC, "created_at"=>2015-06-10 13:16:07 UTC, "version"=>1}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3600ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4880ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=inverter_test command={:count=>"pages", :query=>{}} runtime: 0.3020ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.6240ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3990ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3520ms
+---------------------------------------------
+MetaTagsTest: test_meta_tags_render_correctly
+---------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5590ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3670ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2490ms
+Started GET "/meta_tags" for 127.0.0.1 at 2015-06-10 16:16:07 +0300
+Processing by MetaTagsController#index as HTML
+  Rendered meta_tags/index.html.erb within layouts/application (5.9ms)
+Completed 500 Internal Server Error in 162ms
+---------------------------------------------
+ParserTest: test_parses_templates_with_blocks
+---------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5630ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3000ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2600ms
+  Rendered inline template (0.3ms)
+  Rendered inline template (0.1ms)
+  Rendered inline template (0.1ms)
+  Rendered inline template (0.2ms)
+---------------------------------------------------------------
+ParserTest: test_returns_empty_hash_for_template_without_blocks
+---------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5120ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4470ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4010ms
+-----------------------------------------------------
+RendererTest: test_doesn't_change_html_without_blocks
+-----------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4760ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3480ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3260ms
+------------------------------------------
+RendererTest: test_change_html_with_blocks
+------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4730ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4420ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2680ms
+------------------------------------------------------------------------------
+SyncTest: test_check_synchronization_of_templates_with_models_on_block_removal
+------------------------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 1.3020ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4910ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3830ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3290ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.2810ms
+  Rendered inline template (1.1ms)
+  Rendered inline template (0.3ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"_slugs"=>{"$all"=>[/^pages\-about(?:-(\d+))?$/]}, "_id"=>{"$ne"=>BSON::ObjectId('557839016e6b753093000000')}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5920ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('557839016e6b753093010000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('557839016e6b753093000000')}], "scope"=>"page", "original"=>{}, "modified"=>{"_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb"}, "version"=>1, "action"=>"create", "updated_at"=>2015-06-10 13:17:53 UTC, "created_at"=>2015-06-10 13:17:53 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5380ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=pages documents=[{"_id"=>BSON::ObjectId('557839016e6b753093000000'), "_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb", "updated_at"=>2015-06-10 13:17:53 UTC, "created_at"=>2015-06-10 13:17:53 UTC, "version"=>1}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4810ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3980ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3650ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('557839016e6b753093000000')} update={"$set"=>{"updated_at"=>2015-06-09 00:00:00 UTC}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3690ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3760ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3210ms
+  Rendered inline template (0.2ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('557839016e6b753093020000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('557839016e6b753093000000')}], "scope"=>"page", "original"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}}, "modified"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}}, "version"=>2, "action"=>"update", "updated_at"=>2015-06-10 13:17:53 UTC, "created_at"=>2015-06-10 13:17:53 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4860ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('557839016e6b753093000000')} update={"$set"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}, "updated_at"=>2015-06-10 13:17:53 UTC, "version"=>2}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3530ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=inverter_test command={:count=>"pages", :query=>{}} runtime: 0.5480ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 1.5400ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.5650ms
+-------------------------------------------------------------------------------
+SyncTest: test_check_synchronization_of_templates_with_models_on_block_creation
+-------------------------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4890ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 2.0210ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4190ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4790ms
+  Rendered inline template (0.3ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"_slugs"=>{"$all"=>[/^pages\-about(?:-(\d+))?$/]}, "_id"=>{"$ne"=>BSON::ObjectId('557839016e6b753093030000')}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5580ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('557839016e6b753093040000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('557839016e6b753093030000')}], "scope"=>"page", "original"=>{}, "modified"=>{"_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb"}, "version"=>1, "action"=>"create", "updated_at"=>2015-06-10 13:17:53 UTC, "created_at"=>2015-06-10 13:17:53 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.8480ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=pages documents=[{"_id"=>BSON::ObjectId('557839016e6b753093030000'), "_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb", "updated_at"=>2015-06-10 13:17:53 UTC, "created_at"=>2015-06-10 13:17:53 UTC, "version"=>1}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.8580ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5620ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3800ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('557839016e6b753093030000')} update={"$set"=>{"updated_at"=>2015-06-09 00:00:00 UTC}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3260ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3340ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3200ms
+  Rendered inline template (0.3ms)
+  Rendered inline template (0.2ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('557839016e6b753093050000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('557839016e6b753093030000')}], "scope"=>"page", "original"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}}, "modified"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}}, "version"=>2, "action"=>"update", "updated_at"=>2015-06-10 13:17:53 UTC, "created_at"=>2015-06-10 13:17:53 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5440ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('557839016e6b753093030000')} update={"$set"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "updated_at"=>2015-06-10 13:17:53 UTC, "version"=>2}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3820ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=inverter_test command={:count=>"pages", :query=>{}} runtime: 0.2760ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3580ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.4300ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.4940ms
+---------------------------------------------------------------------
+SyncTest: test_check_initial_synchronization_of_templates_with_models
+---------------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5100ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4210ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3890ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.2710ms
+  Rendered inline template (0.3ms)
+  Rendered inline template (0.2ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"_slugs"=>{"$all"=>[/^pages\-about(?:-(\d+))?$/]}, "_id"=>{"$ne"=>BSON::ObjectId('557839016e6b753093060000')}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.6290ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('557839016e6b753093070000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('557839016e6b753093060000')}], "scope"=>"page", "original"=>{}, "modified"=>{"_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb"}, "version"=>1, "action"=>"create", "updated_at"=>2015-06-10 13:17:53 UTC, "created_at"=>2015-06-10 13:17:53 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.8200ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=pages documents=[{"_id"=>BSON::ObjectId('557839016e6b753093060000'), "_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb", "updated_at"=>2015-06-10 13:17:53 UTC, "created_at"=>2015-06-10 13:17:53 UTC, "version"=>1}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3930ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5080ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=inverter_test command={:count=>"pages", :query=>{}} runtime: 0.3480ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.4710ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.8140ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.4920ms
+-----------------------------------------------------
+RendererTest: test_doesn't_change_html_without_blocks
+-----------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5590ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3460ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2840ms
+------------------------------------------
+RendererTest: test_change_html_with_blocks
+------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4110ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2550ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2310ms
+---------------------------------------------
+MetaTagsTest: test_meta_tags_render_correctly
+---------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4180ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3520ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3570ms
+Started GET "/meta_tags" for 127.0.0.1 at 2015-06-10 16:17:53 +0300
+Processing by MetaTagsController#index as HTML
+  Rendered meta_tags/index.html.erb within layouts/application (3.8ms)
+Completed 200 OK in 146ms (Views: 145.9ms)
+---------------------------------------------
+ParserTest: test_parses_templates_with_blocks
+---------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.6230ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2960ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2440ms
+  Rendered inline template (0.5ms)
+  Rendered inline template (0.2ms)
+  Rendered inline template (0.3ms)
+  Rendered inline template (0.2ms)
+---------------------------------------------------------------
+ParserTest: test_returns_empty_hash_for_template_without_blocks
+---------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4750ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3100ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2440ms
+------------------------------------------
+RendererTest: test_change_html_with_blocks
+------------------------------------------
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 0.9160ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4430ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3840ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4710ms
+-----------------------------------------------------
+RendererTest: test_doesn't_change_html_without_blocks
+-----------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5140ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3300ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2980ms
+---------------------------------------------
+MetaTagsTest: test_meta_tags_render_correctly
+---------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4240ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3240ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3490ms
+Started GET "/meta_tags" for 127.0.0.1 at 2015-06-10 16:24:35 +0300
+Processing by MetaTagsController#index as HTML
+  Rendered meta_tags/index.html.erb within layouts/application (5.8ms)
+Completed 200 OK in 158ms (Views: 157.3ms)
+---------------------------------------------
+ParserTest: test_parses_templates_with_blocks
+---------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.8130ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5080ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5910ms
+  Rendered inline template (0.3ms)
+  Rendered inline template (0.3ms)
+  Rendered inline template (0.2ms)
+  Rendered inline template (0.3ms)
+---------------------------------------------------------------
+ParserTest: test_returns_empty_hash_for_template_without_blocks
+---------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4840ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3580ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3500ms
+-------------------------------------------------------------------------------
+SyncTest: test_check_synchronization_of_templates_with_models_on_block_creation
+-------------------------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5210ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3780ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3130ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.6190ms
+  Rendered inline template (0.3ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"_slugs"=>{"$all"=>[/^pages\-about(?:-(\d+))?$/]}, "_id"=>{"$ne"=>BSON::ObjectId('55783a936e6b7531a6000000')}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4800ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('55783a936e6b7531a6010000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('55783a936e6b7531a6000000')}], "scope"=>"page", "original"=>{}, "modified"=>{"_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb"}, "version"=>1, "action"=>"create", "updated_at"=>2015-06-10 13:24:35 UTC, "created_at"=>2015-06-10 13:24:35 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5920ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=pages documents=[{"_id"=>BSON::ObjectId('55783a936e6b7531a6000000'), "_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb", "updated_at"=>2015-06-10 13:24:35 UTC, "created_at"=>2015-06-10 13:24:35 UTC, "version"=>1}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4750ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4680ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.4210ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('55783a936e6b7531a6000000')} update={"$set"=>{"updated_at"=>2015-06-09 00:00:00 UTC}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3800ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3690ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3460ms
+  Rendered inline template (0.4ms)
+  Rendered inline template (0.5ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('55783a936e6b7531a6020000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('55783a936e6b7531a6000000')}], "scope"=>"page", "original"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}}, "modified"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}}, "version"=>2, "action"=>"update", "updated_at"=>2015-06-10 13:24:35 UTC, "created_at"=>2015-06-10 13:24:35 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5140ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('55783a936e6b7531a6000000')} update={"$set"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "updated_at"=>2015-06-10 13:24:35 UTC, "version"=>2}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5400ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=inverter_test command={:count=>"pages", :query=>{}} runtime: 0.2670ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3780ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3670ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3210ms
+---------------------------------------------------------------------
+SyncTest: test_check_initial_synchronization_of_templates_with_models
+---------------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3180ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3180ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2760ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.2700ms
+  Rendered inline template (0.3ms)
+  Rendered inline template (0.2ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"_slugs"=>{"$all"=>[/^pages\-about(?:-(\d+))?$/]}, "_id"=>{"$ne"=>BSON::ObjectId('55783a936e6b7531a6030000')}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5600ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('55783a936e6b7531a6040000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('55783a936e6b7531a6030000')}], "scope"=>"page", "original"=>{}, "modified"=>{"_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb"}, "version"=>1, "action"=>"create", "updated_at"=>2015-06-10 13:24:35 UTC, "created_at"=>2015-06-10 13:24:35 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5110ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=pages documents=[{"_id"=>BSON::ObjectId('55783a936e6b7531a6030000'), "_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb", "updated_at"=>2015-06-10 13:24:35 UTC, "created_at"=>2015-06-10 13:24:35 UTC, "version"=>1}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3260ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4510ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=inverter_test command={:count=>"pages", :query=>{}} runtime: 0.5220ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.4800ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3710ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3290ms
+------------------------------------------------------------------------------
+SyncTest: test_check_synchronization_of_templates_with_models_on_block_removal
+------------------------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4190ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3880ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3350ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3220ms
+  Rendered inline template (0.3ms)
+  Rendered inline template (0.2ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"_slugs"=>{"$all"=>[/^pages\-about(?:-(\d+))?$/]}, "_id"=>{"$ne"=>BSON::ObjectId('55783a936e6b7531a6050000')}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4620ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('55783a936e6b7531a6060000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('55783a936e6b7531a6050000')}], "scope"=>"page", "original"=>{}, "modified"=>{"_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb"}, "version"=>1, "action"=>"create", "updated_at"=>2015-06-10 13:24:35 UTC, "created_at"=>2015-06-10 13:24:35 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.6140ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=pages documents=[{"_id"=>BSON::ObjectId('55783a936e6b7531a6050000'), "_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb", "updated_at"=>2015-06-10 13:24:35 UTC, "created_at"=>2015-06-10 13:24:35 UTC, "version"=>1}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4430ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.7910ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.7380ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('55783a936e6b7531a6050000')} update={"$set"=>{"updated_at"=>2015-06-09 00:00:00 UTC}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4950ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.6820ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5050ms
+  Rendered inline template (0.9ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('55783a936e6b7531a6070000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('55783a936e6b7531a6050000')}], "scope"=>"page", "original"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}}, "modified"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}}, "version"=>2, "action"=>"update", "updated_at"=>2015-06-10 13:24:35 UTC, "created_at"=>2015-06-10 13:24:35 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.7590ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('55783a936e6b7531a6050000')} update={"$set"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}, "updated_at"=>2015-06-10 13:24:35 UTC, "version"=>2}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4440ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=inverter_test command={:count=>"pages", :query=>{}} runtime: 0.3310ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.4150ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3370ms
+------------------------------------------
+RendererTest: test_change_html_with_blocks
+------------------------------------------
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 1.0040ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4490ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4760ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4730ms
+-----------------------------------------------------
+RendererTest: test_doesn't_change_html_without_blocks
+-----------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5170ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4090ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.6970ms
+---------------------------------------------------------------------
+SyncTest: test_check_initial_synchronization_of_templates_with_models
+---------------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5610ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4280ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3640ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4510ms
+  Rendered inline template (1.3ms)
+  Rendered inline template (0.3ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"_slugs"=>{"$all"=>[/^pages\-about(?:-(\d+))?$/]}, "_id"=>{"$ne"=>BSON::ObjectId('55783acd6e6b7531d1000000')}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 1.7960ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('55783acd6e6b7531d1010000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('55783acd6e6b7531d1000000')}], "scope"=>"page", "original"=>{}, "modified"=>{"_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb"}, "version"=>1, "action"=>"create", "updated_at"=>2015-06-10 13:25:33 UTC, "created_at"=>2015-06-10 13:25:33 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.6090ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=pages documents=[{"_id"=>BSON::ObjectId('55783acd6e6b7531d1000000'), "_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb", "updated_at"=>2015-06-10 13:25:33 UTC, "created_at"=>2015-06-10 13:25:33 UTC, "version"=>1}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3520ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4270ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=inverter_test command={:count=>"pages", :query=>{}} runtime: 0.3110ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.5100ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.4470ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3910ms
+-------------------------------------------------------------------------------
+SyncTest: test_check_synchronization_of_templates_with_models_on_block_creation
+-------------------------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3740ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3090ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3450ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4170ms
+  Rendered inline template (0.4ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"_slugs"=>{"$all"=>[/^pages\-about(?:-(\d+))?$/]}, "_id"=>{"$ne"=>BSON::ObjectId('55783acd6e6b7531d1020000')}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4550ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('55783acd6e6b7531d1030000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('55783acd6e6b7531d1020000')}], "scope"=>"page", "original"=>{}, "modified"=>{"_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb"}, "version"=>1, "action"=>"create", "updated_at"=>2015-06-10 13:25:33 UTC, "created_at"=>2015-06-10 13:25:33 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4580ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=pages documents=[{"_id"=>BSON::ObjectId('55783acd6e6b7531d1020000'), "_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb", "updated_at"=>2015-06-10 13:25:33 UTC, "created_at"=>2015-06-10 13:25:33 UTC, "version"=>1}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3920ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4480ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.6690ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('55783acd6e6b7531d1020000')} update={"$set"=>{"updated_at"=>2015-06-09 00:00:00 UTC}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4570ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5200ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5020ms
+  Rendered inline template (0.3ms)
+  Rendered inline template (0.2ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('55783acd6e6b7531d1040000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('55783acd6e6b7531d1020000')}], "scope"=>"page", "original"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}}, "modified"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}}, "version"=>2, "action"=>"update", "updated_at"=>2015-06-10 13:25:33 UTC, "created_at"=>2015-06-10 13:25:33 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.6420ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('55783acd6e6b7531d1020000')} update={"$set"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "updated_at"=>2015-06-10 13:25:33 UTC, "version"=>2}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.4850ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=inverter_test command={:count=>"pages", :query=>{}} runtime: 0.3560ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.7580ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.4760ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3550ms
+------------------------------------------------------------------------------
+SyncTest: test_check_synchronization_of_templates_with_models_on_block_removal
+------------------------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.2980ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3140ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2560ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.2850ms
+  Rendered inline template (0.3ms)
+  Rendered inline template (0.4ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"_slugs"=>{"$all"=>[/^pages\-about(?:-(\d+))?$/]}, "_id"=>{"$ne"=>BSON::ObjectId('55783acd6e6b7531d1050000')}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.6010ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('55783acd6e6b7531d1060000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('55783acd6e6b7531d1050000')}], "scope"=>"page", "original"=>{}, "modified"=>{"_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb"}, "version"=>1, "action"=>"create", "updated_at"=>2015-06-10 13:25:33 UTC, "created_at"=>2015-06-10 13:25:33 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.7010ms
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=pages documents=[{"_id"=>BSON::ObjectId('55783acd6e6b7531d1050000'), "_page_title"=>"", "_page_description"=>"", "_page_keywords"=>"", "_page_image_url"=>"", "_name"=>"About", "_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}, "_slugs"=>["pages-about"], "hero_image_url"=>"", "_template_name"=>"pages/about.html.erb", "updated_at"=>2015-06-10 13:25:33 UTC, "created_at"=>2015-06-10 13:25:33 UTC, "version"=>1}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5960ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4080ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.4010ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('55783acd6e6b7531d1050000')} update={"$set"=>{"updated_at"=>2015-06-09 00:00:00 UTC}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5440ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.7640ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.7670ms
+  Rendered inline template (1.2ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=inverter_test collection=history_trackers documents=[{"_id"=>BSON::ObjectId('55783acd6e6b7531d1070000'), "association_chain"=>[{"name"=>"Page", "id"=>BSON::ObjectId('55783acd6e6b7531d1050000')}], "scope"=>"page", "original"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      ", "footer"=>"\n        <p>This is an example of the content block named footer.</p>\n      "}}, "modified"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}}, "version"=>2, "action"=>"update", "updated_at"=>2015-06-10 13:25:33 UTC, "created_at"=>2015-06-10 13:25:33 UTC}] flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.6680ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=inverter_test collection=pages selector={"_id"=>BSON::ObjectId('55783acd6e6b7531d1050000')} update={"$set"=>{"_blocks"=>{"subtitle"=>"\n        <p>This is an example of subtitle block</p>\n      "}, "updated_at"=>2015-06-10 13:25:33 UTC, "version"=>2}} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.5300ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=inverter_test command={:count=>"pages", :query=>{}} runtime: 0.3530ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.5810ms
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=pages selector={"$query"=>{}, "$orderby"=>{"created_at"=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.3150ms
+---------------------------------------------
+MetaTagsTest: test_meta_tags_render_correctly
+---------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.3330ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2930ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2580ms
+Started GET "/meta_tags" for 127.0.0.1 at 2015-06-10 16:25:33 +0300
+Processing by MetaTagsController#index as HTML
+  Rendered meta_tags/index.html.erb within layouts/application (3.1ms)
+Completed 200 OK in 147ms (Views: 146.6ms)
+---------------------------------------------
+ParserTest: test_parses_templates_with_blocks
+---------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.5550ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.3670ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.7650ms
+  Rendered inline template (0.2ms)
+  Rendered inline template (0.2ms)
+  Rendered inline template (0.1ms)
+  Rendered inline template (0.2ms)
+---------------------------------------------------------------
+ParserTest: test_returns_empty_hash_for_template_without_blocks
+---------------------------------------------------------------
+  MOPED: 127.0.0.1:27017 QUERY        database=inverter_test collection=system.namespaces selector={:name=>{"$not"=>/\.system\.|\$/}} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4460ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=history_trackers selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2940ms
+  MOPED: 127.0.0.1:27017 DELETE       database=inverter_test collection=pages selector={} flags=[]
+                         COMMAND      database=inverter_test command={:getlasterror=>1, :w=>1} runtime: 0.2700ms

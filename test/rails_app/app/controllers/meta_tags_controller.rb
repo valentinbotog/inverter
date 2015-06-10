@@ -1,0 +1,2 @@
+class MetaTagsController < ApplicationController
+end

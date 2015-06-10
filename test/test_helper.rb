@@ -4,6 +4,7 @@ require 'rails_app/config/environment'
 require 'rails/test_help'
 require 'helpers/template_helper'
 require 'database_cleaner'
+require 'minitest/rails/capybara'
 
 class ActiveSupport::TestCase
   include TemplateHelper
