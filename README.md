@@ -1,5 +1,13 @@
 # Inverter
 
+======
+[![GitHub version](https://badge.fury.io/gh/slate-studio%2Finverter.svg)](http://badge.fury.io/gh/slate-studio%2Finverter)
+[![Build Status](https://travis-ci.org/slate-studio/inverter.svg)](https://travis-ci.org/slate-studio/inverter.svg)
+[![Code Climate](https://codeclimate.com/github/slate-studio/inverter/badges/gpa.svg)](https://codeclimate.com/github/slate-studio/inverter)
+[![Coverage Status](https://coveralls.io/repos/slate-studio/inverter/badge.svg)](https://coveralls.io/r/slate-studio/inverter)
+
+Collection of concerns and helpers for Rails + Mongoid + Character web development
+
 *Easy way to connect Rails templates content to CMS*
 
 Mark content that you want to change via CMS in Rails templates. It's automatically populated to models and is accessible via CMS. When Rails renders template it pulls editable content from databased automatically.

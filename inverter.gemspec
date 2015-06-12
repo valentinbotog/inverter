@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.name        = 'inverter'
   s.version     = Inverter::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ['Alexander Kravets']
+  s.authors     = ['Alexander Kravets', 'Nataliia Kumeiko']
   s.email       = 'alex@slatestudio.com'
   s.license     = 'MIT'
   s.homepage    = 'http://slatestudio.com'
