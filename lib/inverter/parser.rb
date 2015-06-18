@@ -13,13 +13,12 @@ module Inverter
 
     def initialize(template_name)
       @template_name = template_name
-      @file_content  = File.open(Rails.root.join("app/views", @template_name), "rb").read
     end
 
     # parse name from template
     def parse_name
       name    = ''
-      content = @file_content
+      content = file_content
 
       s = content.index(NAME_START_DELIMITER)
       e = content.index(NAME_END_DELIMITER)
@@ -37,7 +36,7 @@ module Inverter
     # names and content to be editable
     def parse
       result  = {}
-      content = @file_content
+      content = file_content
 
       s = content.index(BLOCK_START_DELIMITER)
       e = content.index(BLOCK_END_DELIMITER)
@@ -106,6 +105,12 @@ module Inverter
       end
 
       return map
+    end
+
+    private
+
+    def file_content
+      @file_content ||= File.open(Rails.root.join("app/views", @template_name), "rb").read
     end
   end
 end
