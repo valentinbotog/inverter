@@ -12,7 +12,7 @@
 class @InputInverterVersion extends InputSelect
 
   _create_el: ->
-    @config.optionsHashFieldName = 'version_options'
+    @config.optionsHashFieldName = '_document_versions'
     @config.ignoreOnSubmission   = true
     @config.default              = 0
     @url                         = "#{ @config.path }/#{ @object._id }.json"

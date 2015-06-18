@@ -36,6 +36,7 @@ class Page
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Inverter
+  include Ants::Id
 end
 ```
 
@@ -44,7 +45,6 @@ Setup admin page controller configuration ```controllers/admin/pages_controller.
 ```ruby
 class Admin::PagesController < Admin::BaseController
   mongosteen
-  json_config({ methods: [ :list_item_title, :version_options ])
 end
 ```
 

@@ -6,13 +6,10 @@ module Mongoid
       include Mongoid::Timestamps
       include Mongoid::Slug
       include Mongoid::History::Trackable
+      include Ants::Meta
+      include Ants::Versions
 
       # ATTRIBUTES
-      field :_page_title,         default: ''
-      field :_page_description,   default: ''
-      field :_page_keywords,      default: ''
-      field :_page_image_url,     default: ''
-
       field :_template_name
       field :_name,               default: ''
       field :_blocks, type: Hash, default: {}
@@ -44,24 +41,8 @@ module Mongoid
 
 
       # returns title to be used in cms and identify page in list
-      def list_item_title
+      def _list_item_title
         self._name.empty? ? self._template_name : self._name
-      end
-
-
-      # returns list of available object versions
-      def version_options
-        hash = {}
-
-        history_tracks.only(:created_at, :version).collect do |h|
-          hash[h.version] = "Version #{ h.version } — #{ h.created_at }"
-        end
-
-        if hash.empty?
-          hash = { '' => '--' }
-        end
-
-        return hash
       end
 
 
@@ -70,22 +51,22 @@ module Mongoid
       def update_inverter_meta_tags
         ::Inverter.meta_tags[:og] ||= {}
 
-        unless self._page_title.empty?
-          ::Inverter.meta_tags[:title]      = self._page_title
-          ::Inverter.meta_tags[:og][:title] = self._page_title
+        unless self.meta_title.empty?
+          ::Inverter.meta_tags[:title]      = self.meta_title
+          ::Inverter.meta_tags[:og][:title] = self.meta_title
         end
 
-        unless self._page_description.empty?
-          ::Inverter.meta_tags[:description]      = self._page_description
-          ::Inverter.meta_tags[:og][:description] = self._page_description
+        unless self.meta_description.empty?
+          ::Inverter.meta_tags[:description]      = self.meta_description
+          ::Inverter.meta_tags[:og][:description] = self.meta_description
         end
 
-        unless self._page_keywords.empty?
-          ::Inverter.meta_tags[:keywords] = self._page_keywords
+        unless self.meta_keywords.empty?
+          ::Inverter.meta_tags[:keywords] = self.meta_keywords
         end
 
-        unless self._page_image_url.empty?
-          ::Inverter.meta_tags[:og][:image] = self._page_image_url
+        unless self.opengraph_image_url.empty?
+          ::Inverter.meta_tags[:og][:image] = self.opengraph_image_url
         end
       end
 

@@ -23,11 +23,15 @@ pulled from databased automatically.
   s.files         = `git ls-files`.split("\n")
   s.require_paths = ['lib']
 
-  s.add_dependency("render_anywhere", ">= 0.0.10")
-  s.add_dependency("meta-tags",       ">= 2.0")
-  s.add_dependency("mongoid-history", ">= 0.4.7")
-  s.add_dependency("mongoid-slug",    ">= 4.0.0")
-  s.add_dependency("redcarpet",       ">= 3.2.3")
+  s.add_dependency('ants',            '>= 0.1.1')
+  s.add_dependency('render_anywhere', '>= 0.0.10')
+  s.add_dependency('meta-tags',       '>= 2.0')
+  s.add_dependency('mongoid-history', '>= 0.4.7')
+  s.add_dependency('mongoid-slug',    '>= 4.0.0')
+  s.add_dependency('redcarpet',       '>= 3.2.3')
+
+  s.add_development_dependency 'bundler', '~> 1.9'
+  s.add_development_dependency 'rake',    '~> 10.0'
 end
 
 
