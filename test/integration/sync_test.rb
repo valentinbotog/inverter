@@ -93,4 +93,46 @@ class SyncTest < ActiveSupport::TestCase
     assert_equal("<p>This is an example of subtitle block</p>", Page.first["_blocks"]["subtitle"].strip)
     assert_equal("<p>This is an example of the content block named footer.</p>", Page.first["_blocks"]["footer"].strip)
   end
+
+  test 'check synchronization on template removing' do
+    mock_template 'pages/about.html.erb', %(
+      <!--// About //-->
+      <h1>About</h1>
+      <!--[ subtitle ]-->
+        <p>This is an example of subtitle block</p>
+      <!--END-->
+    )
+
+    Inverter.model_class.sync_with_templates!
+
+    assert_equal(1, Page.count)
+
+    remove_templates('pages')
+
+    Inverter.model_class.sync_with_templates!
+
+    assert_equal(0, Page.count)
+  end
+
+  test 'check synchronization of templates from different folders' do
+    mock_template 'pages/about.html.erb', %(
+      <!--// About //-->
+      <h1>About</h1>
+      <!--[ subtitle ]-->
+        <p>This is an example of subtitle block</p>
+      <!--END-->
+    )
+
+    mock_template 'about/index.html.erb', %(
+      <!--// About //-->
+      <h1>About</h1>
+      <!--[ subtitle ]-->
+        <p>This is an example of subtitle block</p>
+      <!--END-->
+    )
+
+    Inverter.model_class.sync_with_templates!
+
+    assert_equal(2, Page.count)
+  end
 end

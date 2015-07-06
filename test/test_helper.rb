@@ -12,5 +12,6 @@ class ActiveSupport::TestCase
   def setup
     DatabaseCleaner.clean
     remove_templates('pages')
+    remove_templates('about')
   end
 end
