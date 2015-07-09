@@ -11,8 +11,9 @@ module Mongoid
 
       # ATTRIBUTES
       field :_template_name
-      field :_name,               default: ''
-      field :_blocks, type: Hash, default: {}
+      field :_name,                       default: ''
+      field :_blocks,      type: Hash,    default: {}
+      field :_ignore_sync, type: Boolean, default: false
 
       # HISTORY
       track_history track_create: true
@@ -27,11 +28,13 @@ module Mongoid
       #                 :track_destroy  =>  false     # track document destruction, default is false
 
 
-      # INDEXES
-      index({ _template_name: 1 })
-
       # SCOPES
       default_scope -> { asc(:created_at) }
+      scope :available_for_sync, -> { where(_ignore_sync: false) }
+
+      # INDEXES
+      index({ _template_name: 1 })
+      index({ _ignore_sync:   1 })
 
       # SLUG
       # used in cms for direct object access
@@ -139,36 +142,36 @@ module Mongoid
       # syncronize templates with existing page objects
       def self.sync_with_templates!
         template_names          = get_template_names
-        created_objects         = self.all
+        created_objects         = self.available_for_sync
         existing_template_names = created_objects.map { |o| o._template_name }
 
         # add new objects
         if existing_template_names.size < template_names.size
-          puts "\nCreate Inverter objects for new templates: "
+          ap "Create Inverter objects for new templates: "
           template_names_to_create = template_names - existing_template_names
           template_names_to_create.each do |name|
             create_from_template(name)
-            puts " - #{ name }"
+            ap " - #{ name }"
           end
         end
 
         # delete object for removed templates
         if existing_template_names.size > template_names.size
-          puts "\nDelete Inverter objects for missing templates: "
+          ap "Delete Inverter objects for missing templates: "
           template_names_to_remove = existing_template_names - template_names
           template_names_to_remove.each do |name|
-            find_by(_template_name: name).delete
-            puts " - #{ name }"
+            find_by(_template_name: name).destroy
+            ap " - #{ name }"
           end
         end
 
         # update objects for changes in templates
         changed_objects = created_objects.select { |o| o.template_changed? }
         if changed_objects.size > 0
-          puts "\nUpdate Inverter objects for changed templates: "
+          ap "Update Inverter objects for changed templates: "
           changed_objects.each do |o|
             o.update_from_template!
-            puts " - #{ o._template_name }"
+            ap " - #{ o._template_name }"
           end
         end
       end

@@ -29,6 +29,7 @@ pulled from databased automatically.
   s.add_dependency('mongoid-history', '>= 0.4.7')
   s.add_dependency('mongoid-slug',    '>= 4.0.0')
   s.add_dependency('redcarpet',       '>= 3.2.3')
+  s.add_dependency('awesome_print',   '>= 1.6.1')
 
   s.add_development_dependency 'bundler', '~> 1.9'
   s.add_development_dependency 'rake',    '~> 10.0'
