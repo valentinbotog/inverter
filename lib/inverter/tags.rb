@@ -19,7 +19,7 @@ module Inverter
     private
 
       def self.parse_tags(text)
-        regex  = /\[[a-zA-Z0-9-]{2,}#[a-zA-Z0-9-,]{2,}\]/
+        regex  = /\[[a-zA-Z0-9\-]{2,}#[a-zA-Z0-9\-,]{2,}\]/
         result = {}
 
         text.scan(regex).each do |tag|
