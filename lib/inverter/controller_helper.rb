@@ -20,6 +20,8 @@ module Inverter
       if Inverter.object
         self.response_body[0] = Inverter.object.update_html(self.response_body[0])
       end
+
+      self.response_body[0] = Inverter::Tags.update_html(self.response_body[0])
     end
     protected :render_with_inverter_object
 

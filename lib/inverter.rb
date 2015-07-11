@@ -5,6 +5,7 @@ require "redcarpet"
 
 require "inverter/concerns/inverter"
 require "inverter/object"
+require "inverter/tags"
 require "inverter/middleware"
 require "inverter/controller_helper"
 require "inverter/configuration"
