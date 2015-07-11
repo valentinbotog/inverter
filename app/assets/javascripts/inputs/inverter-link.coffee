@@ -14,6 +14,10 @@ class @InputInverterLink extends InputString
 
   # PRIVATE ===============================================
 
+  _has_empty_value: ->
+    return (@value == '<a title="" href=""></a>')
+
+
   _normalize_value: ->
     if ! (@value.indexOf('<a') > -1)
       @value = "<a title='' href=''></a>"
@@ -22,8 +26,8 @@ class @InputInverterLink extends InputString
   _add_input: ->
     @_normalize_value()
 
-    @$el.addClass('input-loft-image')
-    @$el.addClass('has-value')
+    # @$el.addClass('input-loft-image')
+    # @$el.addClass('has-value')
 
     @$input =$ "<input type='hidden' name='#{ @name }' value='#{ @_safe_value() }' />"
     @$el.append @$input
@@ -68,8 +72,14 @@ class @InputInverterLink extends InputString
 
 
   _add_choose_button: ->
+    @$actions =$ "<span class='input-actions'></span>"
+    @$label.append @$actions
+
     @$chooseBtn =$ "<a href='#' class='choose'>Choose or upload a file</a>"
-    @$el.append @$chooseBtn
+    @$actions.append @$chooseBtn
+
+    # @$chooseBtn =$ "<a href='#' class='choose'>Choose or upload a file</a>"
+    # @$el.append @$chooseBtn
 
     @$chooseBtn.on 'click', (e) =>
       e.preventDefault()
@@ -84,11 +94,16 @@ class @InputInverterLink extends InputString
   updateValue: (@value) ->
     @_normalize_value()
 
-    @$input.val(@value)
-    @$input.trigger('change')
-
     @$titleInput.val(@_title())
     @$urlInput.val(@_url())
+
+    if @_has_empty_value()
+      @$input.val('')
+
+    else
+      @$input.val(@value)
+
+    @$input.trigger('change')
 
 
 chr.formInputs['inverter-link'] = InputInverterLink
