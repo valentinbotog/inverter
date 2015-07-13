@@ -13,7 +13,8 @@ module Inverter
       # make a pointer to meta_tags for future use
       Inverter.set_meta_tags(meta_tags)
 
-      # regular render method
+      # Call regular render method, this calls custom template rendered which
+      # idetifies if there is an inverter object for the template
       render_without_inverter_object(*args, &block)
 
       # modify response only if Inverter.object is set
@@ -21,7 +22,9 @@ module Inverter
         self.response_body[0] = Inverter.object.update_html(self.response_body[0])
       end
 
-      self.response_body[0] = Inverter::Tags.update_html(self.response_body[0])
+      if self.request.format.html?
+        self.response_body[0] = Inverter::Tags.update_html(self.response_body[0])
+      end
     end
     protected :render_with_inverter_object
 
