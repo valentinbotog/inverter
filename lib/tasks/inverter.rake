@@ -7,16 +7,16 @@ namespace :inverter do
 
     inverter_objects = Inverter.model_class.available_for_sync
     inverter_objects.each do |o|
-      ap " - #{ o._template_name }"
+      puts " - #{ o._template_name }"
     end
-    ap "#{ inverter_objects.size } objects created."
+    puts "#{ inverter_objects.size } objects created."
   end
 
 
   desc "Sync all inverter objects with template changes"
   task :sync => :environment do
     Inverter.model_class.sync_with_templates!
-    ap "Objects has been updated."
+    puts "Objects has been updated."
   end
 
 end

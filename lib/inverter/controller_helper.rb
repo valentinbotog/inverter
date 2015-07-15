@@ -6,6 +6,7 @@ module Inverter
       alias_method_chain :render, :inverter_object
     end
 
+
     def render_with_inverter_object(*args, &block)
       # reset Inveter.object to nil
       Inverter.reset_object()

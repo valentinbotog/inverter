@@ -1,9 +1,11 @@
 module Inverter
   module Object
+
     attr_accessor(
       :object,
       :meta_tags
     )
+
 
     def update_inverter_object(template_name)
       # proceed if inverter object is not set
@@ -24,13 +26,16 @@ module Inverter
       return nil
     end
 
+
     def reset_object
       self.object = nil
     end
 
+
     def set_meta_tags(meta_tags_collection)
       self.meta_tags = meta_tags_collection
     end
+
   end
 end
 

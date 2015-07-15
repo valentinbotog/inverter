@@ -21,6 +21,7 @@ module Inverter
 end
 
 require "meta_tags"
+require "ants"
 
 ActionController::Base.send :include, Inverter::ControllerHelper
 ActionView::TemplateRenderer.send :include, Inverter::TemplateRendererHelper

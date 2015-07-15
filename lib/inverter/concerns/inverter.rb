@@ -147,31 +147,31 @@ module Mongoid
 
         # add new objects
         if existing_template_names.size < template_names.size
-          ap "Create Inverter objects for new templates: "
+          puts "Create Inverter objects for new templates: "
           template_names_to_create = template_names - existing_template_names
           template_names_to_create.each do |name|
             create_from_template(name)
-            ap " - #{ name }"
+            puts " - #{ name }"
           end
         end
 
         # delete object for removed templates
         if existing_template_names.size > template_names.size
-          ap "Delete Inverter objects for missing templates: "
+          puts "Delete Inverter objects for missing templates: "
           template_names_to_remove = existing_template_names - template_names
           template_names_to_remove.each do |name|
             find_by(_template_name: name).destroy
-            ap " - #{ name }"
+            puts " - #{ name }"
           end
         end
 
         # update objects for changes in templates
         changed_objects = created_objects.select { |o| o.template_changed? }
         if changed_objects.size > 0
-          ap "Update Inverter objects for changed templates: "
+          puts "Update Inverter objects for changed templates: "
           changed_objects.each do |o|
             o.update_from_template!
-            ap " - #{ o._template_name }"
+            puts " - #{ o._template_name }"
           end
         end
       end
