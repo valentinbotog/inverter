@@ -83,8 +83,11 @@ class @InputInverterImage extends InputString
 
 
   _add_choose_button: ->
-    @$chooseBtn =$ "<a href='#' class='choose'></a><br/>"
-    @$el.append @$chooseBtn
+    @$actions =$ "<span class='input-actions'></span>"
+    @$label.append @$actions
+
+    @$chooseBtn =$ "<a href='#' class='choose'>Choose or upload a file</a>"
+    @$actions.append @$chooseBtn
 
     @_update_choose_button_title()
 

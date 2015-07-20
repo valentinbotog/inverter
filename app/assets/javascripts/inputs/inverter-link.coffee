@@ -15,7 +15,7 @@ class @InputInverterLink extends InputString
   # PRIVATE ===============================================
 
   _has_empty_value: ->
-    return (@value == '<a title="" href=""></a>')
+    return ($(@value).attr('href') == '' && $(@value).html() == '')
 
 
   _normalize_value: ->
@@ -24,17 +24,16 @@ class @InputInverterLink extends InputString
 
 
   _add_input: ->
-    @_normalize_value()
+    @_safe_value()
 
-    # @$el.addClass('input-loft-image')
-    # @$el.addClass('has-value')
-
-    @$input =$ "<input type='hidden' name='#{ @name }' value='#{ @_safe_value() }' />"
+    @$input =$ "<input type='hidden' name='#{ @name }' value='#{ @value }' />"
     @$el.append @$input
+
+    @_normalize_value()
 
     @_add_title()
     @_add_url()
-    @_add_choose_button()
+    @_add_actions()
 
 
   _update_value: (url, title) ->
@@ -71,15 +70,17 @@ class @InputInverterLink extends InputString
       @_update_value(newUrl, @_title())
 
 
-  _add_choose_button: ->
+  _add_actions: ->
     @$actions =$ "<span class='input-actions'></span>"
     @$label.append @$actions
 
+    @_add_choose_button()
+    @_add_remove_button()
+
+
+  _add_choose_button: ->
     @$chooseBtn =$ "<a href='#' class='choose'>Choose or upload a file</a>"
     @$actions.append @$chooseBtn
-
-    # @$chooseBtn =$ "<a href='#' class='choose'>Choose or upload a file</a>"
-    # @$el.append @$chooseBtn
 
     @$chooseBtn.on 'click', (e) =>
       e.preventDefault()
@@ -87,6 +88,15 @@ class @InputInverterLink extends InputString
         url   = objects[0].file.url
         title = @_title() || objects[0].name
         @_update_value(url, title)
+
+
+  _add_remove_button: ->
+    @$removeBtn =$ "<a href='#' class='remove'>Remove</a>"
+    @$actions.append @$removeBtn
+
+    @$removeBtn.on 'click', (e) =>
+      e.preventDefault()
+      @_update_value('', '')
 
 
   # PUBLIC ================================================
