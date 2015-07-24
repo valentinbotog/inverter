@@ -24,10 +24,9 @@ class @InputInverterLink extends InputString
 
 
   _add_input: ->
-    @_safe_value()
-
-    @$input =$ "<input type='hidden' name='#{ @name }' value='#{ @value }' />"
+    @$input =$ "<input type='hidden' name='#{ @name }' value='' />"
     @$el.append @$input
+    @$input.val(@value)
 
     @_normalize_value()
 

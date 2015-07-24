@@ -24,8 +24,10 @@ class @InputInverterImage extends InputString
     @$el.addClass('input-loft-image')
     @$el.addClass('has-value')
 
-    @$input =$ "<input type='hidden' name='#{ @name }' value='#{ @_safe_value() }' />"
+    @$input =$ "<input type='hidden' name='#{ @name }' value='' />"
     @$el.append @$input
+    @$input.val(@value)
+
 
     @_add_image()
     @_add_choose_button()
