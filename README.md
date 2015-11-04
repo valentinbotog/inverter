@@ -22,10 +22,10 @@ Inverter.configure do |config|
   config.template_folders = %w( pages )
 
   # templates from template_folders the are not editable
-  config.excluded_template_names = %w( pages/home )
+  config.excluded_templates = %w( pages/home )
 
   # disable Inverter middleware
-  config.disabled_middleware = false
+  config.disable_middleware = false
 end
 ```
 
