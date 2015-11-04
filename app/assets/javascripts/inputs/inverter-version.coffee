@@ -17,7 +17,7 @@ class @InputInverterVersion extends InputSelect
     @config.default              = 0
     @url                         = "#{ @config.path }/#{ @object._id }.json"
 
-    @$el =$ "<div class='input-#{ @config.type } input-#{ @config.klass } #{ @config.klassName }'>"
+    @$el =$ "<div class='input-#{ @config.type } #{ @config.klass } #{ @config.klassName }'>"
 
 
   _add_input: ->

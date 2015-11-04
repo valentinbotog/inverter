@@ -127,20 +127,24 @@ Inverter supports [chr](https://github.com/slate-studio/chr) out of the box. Inc
 #= require inverter
 
 pagesConfig = ->
-  itemTitleField: 'list_item_title'
-  disableNewItems: true
-  disableDelete:   true
-  arrayStore: new RailsArrayStore({
-    resource: 'page'
-    path:     '/admin/pages'
-  })
-  formSchema:
-    version:           { type: 'inverter-version', path: '/admin/pages' }
-    _page_title:       { type: 'string', label: 'Title'                 }
-    _page_description: { type: 'text',   label: 'Description'           }
-    _page_keywords:    { type: 'text',   label: 'Keywords'              }
-    _page_image_url:   { type: 'string', label: 'Image URL'             }
-    _blocks:           { type: 'inverter'                               }
+  config =
+    disableNewItems: true
+    disableDelete:   true
+
+    arrayStore: new RailsArrayStore({
+      resource: 'page'
+      path:     '/admin/pages'
+    })
+
+    formSchema:
+      version:              { type: 'inverter-version', path: '/admin/pages' }
+      _meta_title:          { type: 'string', label: 'Title'                 }
+      _meta_description:    { type: 'text',   label: 'Description'           }
+      _meta_keywords:       { type: 'text',   label: 'Keywords'              }
+      _opengraph_image_url: { type: 'string', label: 'Image URL'             }
+      _blocks:              { type: 'inverter'                               }
+
+  return config
 ```
 
 Inverer ```version``` input allows to select previous version of the page to edit.
@@ -148,7 +152,7 @@ Inverer ```version``` input allows to select previous version of the page to edi
 Inverter input has an option ```defaultInputType``` that specifies what input type should be used as default, if nothing specified ```text``` is used. This might be set to WYSIWYG editor of your choice, e.g:
 
 ```coffeescript
-blocks: { type: 'inverter', defaultInputType: 'redactor' }
+_blocks: { type: 'inverter', defaultInputType: 'redactor' }
 ```
 
 You can also specify input type that you want to use for specific block like this: ```<!--[ Main Body : text ]-->``` — in this case ```Main Body``` would be a label and ```text``` is an input type that will be used to edit this block in CMS.
