@@ -1,7 +1,7 @@
 .DS_Store
 
 test/rails_app/tmp
-test/rails_app/log
+test/rails_app/log/
 test/rails_app/app/views/pages
 log
 pkg/

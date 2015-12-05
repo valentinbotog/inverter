@@ -11,11 +11,15 @@ module Inverter
       return false
     end
 
-    def self.render(html, blocks)
+    def self.markdown
       # markdown configuration
       # https://github.com/vmg/redcarpet#and-its-like-really-simple-to-use
-      markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
+      @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML,
+                                            autolink: true,
+                                            tables: true)
+    end
 
+    def self.render(html, blocks)
       offset = 0
       map = ::Inverter::Parser.map_blocks_for(html)
 
@@ -27,7 +31,7 @@ module Inverter
           block = markdown.render(block)
         end
 
-        block = "\n#{ block }\n"
+        block = "#{ block }"
 
         html[offset+pos[0]..offset+pos[1]] = block
 

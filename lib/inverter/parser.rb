@@ -110,7 +110,11 @@ module Inverter
     private
 
     def file_content
-      @file_content ||= File.open(Rails.root.join("app/views", @template_name), "rb").read
+      @file_content ||= template_file
+    end
+
+    def template_file
+      File.open(Rails.root.join("app/views", @template_name), "rb").read
     end
   end
 end
