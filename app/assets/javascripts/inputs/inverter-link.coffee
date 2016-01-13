@@ -1,27 +1,20 @@
 # -----------------------------------------------------------------------------
 # Author: Alexander Kravets <alex@slatestudio.com>,
 #         Slate Studio (http://www.slatestudio.com)
-#
-# Coding Guide:
-#   https://github.com/thoughtbot/guides/tree/master/style/coffeescript
-# -----------------------------------------------------------------------------
-
 # -----------------------------------------------------------------------------
 # INPUT INVERTER LINK
 # - depends on Loft character plugin for assets management
 # -----------------------------------------------------------------------------
 class @InputInverterLink extends InputString
 
-  # PRIVATE ===============================================
+  # PRIVATE ===================================================================
 
   _has_empty_value: ->
     return ($(@value).attr('href') == '' && $(@value).html() == '')
 
-
   _normalize_value: ->
     if ! (@value.indexOf('<a') > -1)
       @value = "<a title='' href=''></a>"
-
 
   _add_input: ->
     @$input =$ "<input type='hidden' name='#{ @name }' value='' />"
@@ -34,18 +27,14 @@ class @InputInverterLink extends InputString
     @_add_url()
     @_add_actions()
 
-
   _update_value: (url, title) ->
     $wrapper =$ "<div>#{ @value }</div>"
     $wrapper.children().attr('href', url).attr('title', title).html(title)
     @updateValue($wrapper.html())
 
-
   _title: -> $(@value).html()
 
-
   _url: -> $(@value).attr('href')
-
 
   _add_title: ->
     @$titleInput =$ "<input type='text' value='' placeholder='Title' />"
@@ -57,7 +46,6 @@ class @InputInverterLink extends InputString
       newTitle = $(e.target).val()
       @_update_value(@_url(), newTitle)
 
-
   _add_url: ->
     @$urlInput =$ "<input type='text' value='' placeholder='URL' />"
     @$el.append @$urlInput
@@ -68,14 +56,12 @@ class @InputInverterLink extends InputString
       newUrl = $(e.target).val()
       @_update_value(newUrl, @_title())
 
-
   _add_actions: ->
     @$actions =$ "<span class='input-actions'></span>"
     @$label.append @$actions
 
     @_add_choose_button()
     @_add_remove_button()
-
 
   _add_choose_button: ->
     @$chooseBtn =$ "<a href='#' class='choose'>Choose or upload a file</a>"
@@ -88,7 +74,6 @@ class @InputInverterLink extends InputString
         title = @_title() || objects[0].name
         @_update_value(url, title)
 
-
   _add_remove_button: ->
     @$removeBtn =$ "<a href='#' class='remove'>Remove</a>"
     @$actions.append @$removeBtn
@@ -97,8 +82,7 @@ class @InputInverterLink extends InputString
       e.preventDefault()
       @_update_value('', '')
 
-
-  # PUBLIC ================================================
+  # PUBLIC ====================================================================
 
   updateValue: (@value) ->
     @_normalize_value()
@@ -114,9 +98,4 @@ class @InputInverterLink extends InputString
 
     @$input.trigger('change')
 
-
-chr.formInputs['inverter-link'] = InputInverterLink
-
-
-
-
+formagicInputs['inverter-link'] = InputInverterLink

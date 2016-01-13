@@ -1,6 +1,3 @@
-require "mongoid_slug"
-require "mongoid-history"
-require "history_tracker"
 require "redcarpet"
 
 require "inverter/concerns/inverter"
@@ -19,9 +16,6 @@ module Inverter
   extend Configuration
   extend Object
 end
-
-require "meta_tags"
-require "ants"
 
 ActionController::Base.send :include, Inverter::ControllerHelper
 ActionView::TemplateRenderer.send :include, Inverter::TemplateRendererHelper

@@ -1,22 +1,16 @@
 # -----------------------------------------------------------------------------
 # Author: Alexander Kravets <alex@slatestudio.com>,
 #         Slate Studio (http://www.slatestudio.com)
-#
-# Coding Guide:
-#   https://github.com/thoughtbot/guides/tree/master/style/coffeescript
-# -----------------------------------------------------------------------------
-
 # -----------------------------------------------------------------------------
 # INPUT INVERTER IMAGE
 #
 # Dependencies:
 #  - Loft character plugin for assets management
 #  - Chr input string implementation
-#
 # -----------------------------------------------------------------------------
 class @InputInverterImage extends InputString
 
-  # PRIVATE ===============================================
+  # PRIVATE ===================================================================
 
   _add_input: ->
     @_normalize_value()
@@ -28,12 +22,10 @@ class @InputInverterImage extends InputString
     @$el.append @$input
     @$input.val(@value)
 
-
     @_add_image()
     @_add_choose_button()
     @_add_remove_button()
     @_add_alt()
-
 
   _normalize_value: ->
     if @value && @value.indexOf('<img') > -1
@@ -44,12 +36,9 @@ class @InputInverterImage extends InputString
     else
       @value = "<img src='' alt='' />"
 
-
   _alt: -> $(@value).attr('alt')
 
-
   _src: -> $(@value).attr('src')
-
 
   _add_alt: ->
     @$altInput =$ "<input type='text' value='' placeholder='Text alternative (alt)' />"
@@ -61,17 +50,14 @@ class @InputInverterImage extends InputString
       newAlt = $(e.target).val()
       @_update_value(@_src(), newAlt)
 
-
   _update_alt: ->
     @$altInput.val(@_alt())
     if @_src() == '' then @$altInput.hide() else @$altInput.show()
-
 
   _add_image: ->
     @$image =$ "<a href='' target='_blank' class='image'><img src='' /></a>"
     @$el.append @$image
     @_update_image()
-
 
   _update_image: ->
     imageUrl = @_src()
@@ -82,7 +68,6 @@ class @InputInverterImage extends InputString
       @$el.addClass('has-value')
       @$image.attr('href', imageUrl).children().attr('src', imageUrl)
       @$image.show()
-
 
   _add_choose_button: ->
     @$actions =$ "<span class='input-actions'></span>"
@@ -100,18 +85,15 @@ class @InputInverterImage extends InputString
         alt    = @_alt() || objects[0].name
         @_update_value(newSrc, alt)
 
-
   _update_choose_button_title: ->
     title = if @value == '' then 'Choose or upload' else 'Choose other or upload'
     @$chooseBtn.html(title)
-
 
   _update_value: (src, alt) ->
     value = @value
     value = value.replace("src='#{ @_src() }'", "src='#{ src }'")
     value = value.replace("alt='#{ @_alt() }'", "alt='#{ alt }'")
     @updateValue(value)
-
 
   _add_remove_button: ->
     @$removeBtn =$ "<a href='#' class='remove'>Remove</a>"
@@ -122,8 +104,7 @@ class @InputInverterImage extends InputString
       if confirm('Are you sure?')
         @updateValue('')
 
-
-  # PUBLIC ================================================
+  # PUBLIC ====================================================================
 
   updateValue: (@value) ->
     @_normalize_value()
@@ -133,9 +114,4 @@ class @InputInverterImage extends InputString
     @_update_image()
     @_update_alt()
 
-
-chr.formInputs['inverter-image'] = InputInverterImage
-
-
-
-
+formagicInputs['inverter-image'] = InputInverterImage

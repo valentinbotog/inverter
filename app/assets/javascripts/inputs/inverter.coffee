@@ -1,11 +1,6 @@
 # -----------------------------------------------------------------------------
 # Author: Alexander Kravets <alex@slatestudio.com>,
 #         Slate Studio (http://www.slatestudio.com)
-#
-# Coding Guide:
-#   https://github.com/thoughtbot/guides/tree/master/style/coffeescript
-# -----------------------------------------------------------------------------
-
 # -----------------------------------------------------------------------------
 # INPUT INVERTER
 # -----------------------------------------------------------------------------
@@ -18,7 +13,6 @@ if ! @_slugify
       .replace(/[^\w\-]+/g, '')       # Remove all non-word chars
       .replace(/\-\-+/g, '-')         # Replace multiple - with single -
       .trim()                         # Trim - from start/end of text
-
 
 class @InputInverter
   constructor: (@name, @value, @config, @object) ->
@@ -34,12 +28,10 @@ class @InputInverter
 
     return this
 
-
-  # PRIVATE ===============================================
+  # PRIVATE ===================================================================
 
   _create_el: ->
     @$el =$ "<div class='input-#{ @config.type } #{ @config.klassName }'>"
-
 
   _add_input: (name, value) ->
     inputConfig = $.extend {}, @config
@@ -55,7 +47,7 @@ class @InputInverter
     inputType ?= @config.defaultInputType || 'text'
     inputType  = $.trim(inputType)
 
-    if ! chr.formInputs[inputType]
+    if ! formagicInputs[inputType]
       inputType = 'text'
 
     if @startsWith
@@ -70,7 +62,7 @@ class @InputInverter
     inputConfig.klassName = 'inverter-block-' + _slugify(inputConfig.label)
     inputConfig.klass    ?= 'stacked'
 
-    inputClass = chr.formInputs[inputType]
+    inputClass = formagicInputs[inputType]
 
     # here we have @config.namePrefix undefined, so the second case works
     # where @name is [_blocks] and name is the name of the block
@@ -82,15 +74,13 @@ class @InputInverter
 
     return new inputClass(inputName, value, inputConfig, @object)
 
-
-  # PUBLIC ================================================
+  # PUBLIC ====================================================================
 
   initialize: ->
     for name, input of @inputs
       input.initialize()
 
     @config.onInitialize?(this)
-
 
   hash: (hash={}) ->
     obj = {}
@@ -102,20 +92,12 @@ class @InputInverter
     hash[@config.klassName] = obj
     return hash
 
-
   updateValue: (@value) ->
     for key, input of @inputs
       input.updateValue(@value[key])
 
-
   showErrorMessage: (message) -> ;
-
 
   hideErrorMessage: -> ;
 
-
-chr.formInputs['inverter'] = InputInverter
-
-
-
-
+formagicInputs['inverter'] = InputInverter

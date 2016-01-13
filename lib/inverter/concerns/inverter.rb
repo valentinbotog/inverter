@@ -1,3 +1,5 @@
+require "history_tracker"
+
 module Mongoid
   module Inverter
     extend ActiveSupport::Concern
@@ -6,8 +8,8 @@ module Mongoid
       include Mongoid::Timestamps
       include Mongoid::Slug
       include Mongoid::History::Trackable
-      include Ants::Meta
-      include Ants::Versions
+      include PageMeta
+      include DocumentVersions
 
       # ATTRIBUTES
       field :_template_name

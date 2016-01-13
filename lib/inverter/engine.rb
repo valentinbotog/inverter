@@ -11,7 +11,3 @@ module Inverter
     end
   end
 end
-
-
-
-

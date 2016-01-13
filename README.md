@@ -2,14 +2,19 @@
 
 *Easy way to connect Rails templates content to CMS*
 
-Mark content that you want to change via CMS in Rails templates. It's automatically populated to models and is accessible via CMS. When Rails renders template it pulls editable content from databased automatically.
+Mark content that you want to change via CMS in Rails templates. It's
+automatically populated to models and is accessible via CMS. When Rails renders
+template it pulls editable content from databased automatically.
 
+This gem intendent to be used with
+[Character](https://github.com/slates-studio/character) based project to satisfy
+all dependencies.
 
 ## Setup
 
 Add to ```Gemfile```:
 
-    gem "inverter", github: "slate-studio/inverter"
+    gem "inverter"
 
 Setup initializer ```config/initializers/inverter.rb```:
 
@@ -36,15 +41,18 @@ class Page
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Inverter
-  include Ants::Id
+  include UnderscoreId
 end
 ```
 
-Setup admin page controller configuration ```controllers/admin/pages_controller.rb```:
+Setup admin page controller configuration ```controllers/admin/api/pages_controller.rb```:
 
 ```ruby
-class Admin::PagesController < Admin::BaseController
-  mongosteen
+module Admin
+  module Api
+    class PagesController < BaseController
+    end
+  end
 end
 ```
 
@@ -177,27 +185,3 @@ To sync all inverter objects with template changes run:
     rake inverter:sync
 
 **You might need to run this command on production after deploy if some templates blocks were changed.**
-
-
-## Inverter Family:
-
-- [Character](https://github.com/slate-studio/chr): Powerful responsive javascript CMS for apps
-- [Mongosteen](https://github.com/slate-studio/mongosteen): An easy way to add RESTful actions for Mongoid models
-- [Inverter](https://github.com/slate-studio/inverter): An easy way to connect Rails templates content to Character CMS
-- [Loft](https://github.com/slate-studio/loft): Media assets manager for Character CMS
-
-
-## License
-
-Copyright © 2015 [Slate Studio, LLC](http://slatestudio.com). Inverter is free software, and may be redistributed under the terms specified in the [license](LICENSE.md).
-
-
-## About Slate Studio
-
-[![Slate Studio](https://slate-git-images.s3-us-west-1.amazonaws.com/slate.png)](http://slatestudio.com)
-
-Inverter is maintained and funded by [Slate Studio, LLC](http://slatestudio.com). Tweet your questions or suggestions to [@slatestudio](https://twitter.com/slatestudio) and while you’re at it follow us too.
-
-
-
-
