@@ -61,26 +61,18 @@ class @InputInverterLink extends InputString
     @$label.append @$actions
 
     @_add_choose_button()
-    @_add_remove_button()
 
   _add_choose_button: ->
-    @$chooseBtn =$ "<a href='#' class='choose'>Choose or upload a file</a>"
+    @$chooseBtn =$ "<button>#{ Icons.upload }</button>"
     @$actions.append @$chooseBtn
 
     @$chooseBtn.on 'click', (e) =>
       e.preventDefault()
-      chr.modules.loft.showModal 'all', false, (objects) =>
-        url   = objects[0].file.url
-        title = @_title() || objects[0].name
+      chr.modules.loft.showAll false, (objects) =>
+        asset = objects[0]
+        url   = asset.file.url
+        title = @_title() || asset.name
         @_update_value(url, title)
-
-  _add_remove_button: ->
-    @$removeBtn =$ "<a href='#' class='remove'>Remove</a>"
-    @$actions.append @$removeBtn
-
-    @$removeBtn.on 'click', (e) =>
-      e.preventDefault()
-      @_update_value('', '')
 
   # PUBLIC ====================================================================
 

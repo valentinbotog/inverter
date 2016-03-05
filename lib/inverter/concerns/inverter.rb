@@ -11,13 +11,13 @@ module Mongoid
       include PageMeta
       include DocumentVersions
 
-      # ATTRIBUTES
+      ## Attributes
       field :_template_name
       field :_name,                       default: ''
       field :_blocks,      type: Hash,    default: {}
       field :_ignore_sync, type: Boolean, default: false
 
-      # HISTORY
+      ## History
       track_history track_create: true
       # # telling Mongoid::History how you want to track changes
       # # dynamic fields will be tracked automatically (for MongoId 4.0+ you should include Mongoid::Attributes::Dynamic to your model)
@@ -29,27 +29,25 @@ module Mongoid
       #                 :track_update   =>  true,     # track document updates, default is true
       #                 :track_destroy  =>  false     # track document destruction, default is false
 
-
-      # SCOPES
+      ## Scopes
       default_scope -> { asc(:created_at) }
       scope :available_for_sync, -> { where(_ignore_sync: false) }
 
-      # INDEXES
+      ## Indexes
       index({ _template_name: 1 })
       index({ _ignore_sync:   1 })
 
-      # SLUG
+      ## Slug
       # used in cms for direct object access
       slug do |current_object|
         current_object._template_name.gsub('.html.erb', '').gsub('/', '-')
       end
 
-
-      # returns title to be used in cms and identify page in list
-      def _list_item_title
+      ## Helpers
+      def name_or_template
         self._name.empty? ? self._template_name : self._name
       end
-
+      alias_method :_list_item_title, :name_or_template
 
       # populates seo values to cached meta_tags object which is
       # used by ActionController while template rendering
@@ -75,13 +73,11 @@ module Mongoid
         end
       end
 
-
       # updates blocks in html with objects _blocks hash values
       def update_html(html)
         html = ::Inverter::Renderer.render(html, self._blocks)
         return html
       end
-
 
       # returns datetime when template was updated
       def template_updated_at
@@ -89,12 +85,10 @@ module Mongoid
         File.mtime(template_path).getgm
       end
 
-
       # check if template file was changed after object was saved
       def template_changed?
         template_updated_at > updated_at.getgm
       end
-
 
       # read template blocks and save to objects _blocks hash
       def update_from_template!
@@ -128,9 +122,7 @@ module Mongoid
         save
       end
 
-
-      # class methods
-
+      ## Class Methods
 
       # creat new page object from template
       def self.create_from_template(template_name)
@@ -178,7 +170,6 @@ module Mongoid
         end
       end
 
-
       # returns list of template names for gem configuration in
       # config/initializers/inverter.rb
       def self.get_template_names
@@ -206,7 +197,3 @@ module Mongoid
     end
   end
 end
-
-
-
-

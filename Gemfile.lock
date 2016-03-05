@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    inverter (0.5.0)
+    inverter (0.5.1)
       redcarpet (>= 3.2.3)
       render_anywhere (>= 0.0.10)
 

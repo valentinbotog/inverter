@@ -73,10 +73,10 @@ class @InputInverterImage extends InputString
     @$actions =$ "<span class='input-actions'></span>"
     @$label.append @$actions
 
-    @$chooseBtn =$ "<a href='#' class='choose'>Choose or upload a file</a>"
+    @$chooseBtn =$ "<button>#{ Icons.upload }</button>"
     @$actions.append @$chooseBtn
 
-    @_update_choose_button_title()
+    #@_update_choose_button_title()
 
     @$chooseBtn.on 'click', (e) =>
       e.preventDefault()
@@ -96,7 +96,7 @@ class @InputInverterImage extends InputString
     @updateValue(value)
 
   _add_remove_button: ->
-    @$removeBtn =$ "<a href='#' class='remove'>Remove</a>"
+    @$removeBtn =$ "<button>#{ Icons.remove }</button>"
     @$el.append @$removeBtn
 
     @$removeBtn.on 'click', (e) =>
