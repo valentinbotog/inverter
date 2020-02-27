@@ -3,7 +3,7 @@ module Inverter
     extend ActiveSupport::Concern
 
     included do
-      alias_method_chain :render, :inverter_object
+      alias_method :render, :inverter_object
     end
 
 
